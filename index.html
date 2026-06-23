@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Aadhya ❤️</title>
+<title>For Aadhya ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -16,70 +15,60 @@ box-sizing:border-box;
 }
 
 body{
-font-family:Poppins,sans-serif;
+font-family:'Poppins',sans-serif;
 background:#000;
 overflow:hidden;
+height:100vh;
 color:white;
 }
 
 .slide{
 position:absolute;
 width:100%;
-height:100vh;
-display:none;
+height:100%;
+opacity:0;
+transition:opacity 1.5s ease;
+display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
 padding:20px;
-text-align:center;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
 }
 
-.active{
-display:flex;
-animation:fade 1s;
+.slide.active{
+opacity:1;
 }
 
-@keyframes fade{
-from{opacity:0;transform:scale(1.05);}
-to{opacity:1;transform:scale(1);}
-}
-
-img{
-width:320px;
-height:420px;
+.slide img{
+width:90%;
+max-width:380px;
+height:70vh;
 object-fit:cover;
 border-radius:25px;
 box-shadow:0 10px 40px rgba(0,0,0,.5);
-margin-bottom:25px;
+animation:zoom 5s linear forwards;
 }
 
-h1{
-font-family:'Dancing Script',cursive;
-font-size:4rem;
-margin-bottom:15px;
+@keyframes zoom{
+from{transform:scale(1);}
+to{transform:scale(1.08);}
 }
 
-.text{
-max-width:800px;
-font-size:1.25rem;
-line-height:1.8;
-background:rgba(255,255,255,.15);
-padding:25px;
+.message{
+margin-top:20px;
+background:rgba(255,255,255,.12);
+padding:18px;
 border-radius:20px;
 backdrop-filter:blur(10px);
+max-width:700px;
+font-size:1.1rem;
+text-align:center;
 }
 
-button{
-margin-top:25px;
-padding:15px 35px;
-border:none;
-border-radius:50px;
-font-size:18px;
-font-weight:bold;
-background:white;
-color:#ff4f81;
-cursor:pointer;
+.final{
+font-family:'Dancing Script',cursive;
+font-size:2.2rem;
+line-height:1.8;
 }
 
 .hearts{
@@ -91,195 +80,158 @@ z-index:-1;
 
 .heart{
 position:absolute;
-font-size:22px;
+font-size:24px;
 animation:float 8s linear infinite;
 }
 
 @keyframes float{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-120px);}
+0%{
+transform:translateY(100vh);
+opacity:1;
+}
+100%{
+transform:translateY(-100px);
+opacity:0;
+}
 }
 
-.final-message{
-font-size:1.6rem;
-line-height:2;
-max-width:900px;
+.progress{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:4px;
+background:rgba(255,255,255,.2);
 }
 
+.bar{
+height:100%;
+width:0%;
+background:white;
+animation:progress 5s linear infinite;
+}
+
+@keyframes progress{
+from{width:0%;}
+to{width:100%;}
+}
+
+audio{
+position:fixed;
+bottom:10px;
+right:10px;
+z-index:999;
+}
 </style>
 </head>
+
 <body>
 
 <div class="hearts" id="hearts"></div>
 
-<audio autoplay loop controls style="position:fixed;top:10px;right:10px;">
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<audio autoplay loop controls>
 <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<!-- INTRO -->
-
 <div class="slide active">
-<h1>Aadhya ❤️</h1>
-
-<div class="text">
-Before you decide anything...
-please give your stubborn Parth just 2 minutes. 🥺❤️
-</div>
-
-<button onclick="nextSlide()">Continue 💖</button>
-</div>
-
-<!-- CHILDHOOD -->
-
-<div class="slide">
 <img src="photo1.jpg">
-
-<div class="text">
-From this cute little Malkin 👶💕
-to the beautiful girl you are today...
-
-You have always been special.
+<div class="message">
+Aadhya ❤️<br><br>
+Please give your Parth a few moments of your heart 🥺
 </div>
-
-<button onclick="nextSlide()">Next ❤️</button>
 </div>
-
-<!-- PHOTO 2 -->
 
 <div class="slide">
 <img src="photo2.jpg">
-
-<div class="text">
-This smile...
-
-I don't know if you realize it,
-but it can fix my worst day. 🌙✨
+<div class="message">
+Your smile has always been one of my favorite things in this world ✨
 </div>
-
-<button onclick="nextSlide()">Next ❤️</button>
 </div>
-
-<!-- PHOTO 3 -->
 
 <div class="slide">
 <img src="photo3.jpg">
-
-<div class="text">
-Every memory with you feels like
-a chapter I never want to end. 🤍
+<div class="message">
+Every memory with you became a chapter I never want to lose 🤍
 </div>
-
-<button onclick="nextSlide()">Next ❤️</button>
 </div>
-
-<!-- PHOTO 4 -->
 
 <div class="slide">
 <img src="photo4.jpg">
-
-<div class="text">
-You look beautiful here...
-
-but your heart is even more beautiful.
-❤️
+<div class="message">
+You are beautiful not only because of how you look,
+but because of the person you are ❤️
 </div>
-
-<button onclick="nextSlide()">Next ❤️</button>
 </div>
-
-<!-- PHOTO 5 -->
 
 <div class="slide">
 <img src="photo5.jpg">
-
-<div class="text">
-I know I made mistakes.
-
-I know I hurt you.
-
-And for that...
-I am truly sorry. 💔
+<div class="message">
+I know I made mistakes and hurt you.
+I am truly sorry for that 💔
 </div>
-
-<button onclick="nextSlide()">Next ❤️</button>
 </div>
-
-<!-- PHOTO 6 -->
 
 <div class="slide">
 <img src="photo6.jpg">
-
-<div class="text">
-Your smile is something I never want
-to be the reason for losing. 🎂❤️
+<div class="message">
+No matter what happens,
+you will always be special to me 🎂❤️
 </div>
-
-<button onclick="nextSlide()">Last Page ❤️</button>
 </div>
-
-<!-- FINAL -->
 
 <div class="slide">
+<div class="message final">
 
-<h1>I'm Sorry, My Sweetheart ❤️</h1>
-
-<div class="text final-message">
-
-Aadhyaaa Malkin 🙈❤️
-
-I know words can't erase mistakes.
-
-But I hope you know that my apology
-comes from my heart.
+Aadhyaaa Malkin ❤️
 
 Thank you for every smile.
-
 Thank you for every memory.
-
 Thank you for every moment.
 
-No matter what happens,
-you will always hold a special place in my heart.
+I Love You My Sweetheart ❤️
 
-❤️
+My Babyyyyyyyyyyyyy 🙈🤧❤️🫰💫🔮💓💋
 
-I Love You My Sweetheart
-My Babyyyyyyyyyyyyy
-Aadhyaaa Malkin 🙈🤧❤️🫰💫🔮💓💋
-
-Will you forgive me? 🥺❤️
+— Parth
 
 </div>
-
 </div>
 
 <script>
 
-let slides=document.querySelectorAll(".slide");
+const slides=document.querySelectorAll('.slide');
 let current=0;
 
-function nextSlide(){
+setInterval(()=>{
 
-slides[current].classList.remove("active");
+slides[current].classList.remove('active');
 
-current++;
+current=(current+1)%slides.length;
 
-if(current<slides.length){
-slides[current].classList.add("active");
-}
-}
+slides[current].classList.add('active');
+
+const bar=document.getElementById('bar');
+bar.style.animation='none';
+bar.offsetHeight;
+bar.style.animation='progress 5s linear';
+
+},5000);
 
 for(let i=0;i<40;i++){
 
-let heart=document.createElement("div");
+let heart=document.createElement('div');
 
-heart.className="heart";
-heart.innerHTML="❤️";
+heart.className='heart';
+heart.innerHTML='❤️';
 
-heart.style.left=Math.random()*100+"%";
-heart.style.animationDuration=(5+Math.random()*5)+"s";
+heart.style.left=Math.random()*100+'%';
+heart.style.animationDuration=(5+Math.random()*5)+'s';
 
-document.getElementById("hearts").appendChild(heart);
+document.getElementById('hearts').appendChild(heart);
 }
 
 </script>
