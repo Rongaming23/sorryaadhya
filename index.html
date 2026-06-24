@@ -346,7 +346,7 @@ issue: document.getElementById("issueType").value,
 date: new Date().toLocaleString()
 });
 
-history = history.slice(0,50);
+history = history.slice(0,2000);
 
 localStorage.setItem(key, JSON.stringify(history));
 
