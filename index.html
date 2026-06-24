@@ -3,132 +3,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customer Details Formatter</title>
+<title>Customer Details Formatter Pro</title>
 
 <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
 body{
-    font-family: Arial, sans-serif;
-    background:#f4f6f9;
-    padding:30px;
+background:#f4f7fc;
+padding:30px;
 }
 
 .container{
-    max-width:700px;
-    margin:auto;
-    background:white;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+max-width:900px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 8px 25px rgba(0,0,0,.1);
 }
 
-h2{
-    text-align:center;
-    margin-bottom:20px;
+h1{
+text-align:center;
+color:#2563eb;
+margin-bottom:20px;
 }
 
 textarea{
-    width:100%;
-    height:180px;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    resize:vertical;
-    font-size:14px;
+width:100%;
+height:180px;
+padding:15px;
+border:1px solid #d1d5db;
+border-radius:10px;
+resize:none;
+font-size:14px;
+}
+
+.buttons{
+margin-top:15px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
 }
 
 button{
-    margin-top:15px;
-    padding:12px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:15px;
-    margin-right:10px;
+padding:12px 18px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
 }
 
-.format-btn{
-    background:#007bff;
-    color:white;
+.primary{background:#2563eb;color:white;}
+.success{background:#16a34a;color:white;}
+.danger{background:#dc2626;color:white;}
+.darkbtn{background:#111827;color:white;}
+
+.grid{
+margin-top:20px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
 }
 
-.copy-btn{
-    background:#28a745;
-    color:white;
+.field{
+display:flex;
+flex-direction:column;
+}
+
+.field label{
+font-weight:600;
+margin-bottom:5px;
+}
+
+.field input{
+padding:10px;
+border:1px solid #d1d5db;
+border-radius:8px;
 }
 
 .output{
-    margin-top:20px;
-    background:#f8f9fa;
-    border:1px solid #ddd;
-    border-radius:8px;
-    padding:15px;
-    white-space:pre-line;
-    min-height:120px;
+margin-top:20px;
+background:#f9fafb;
+border:1px solid #d1d5db;
+padding:15px;
+border-radius:10px;
+white-space:pre-line;
+}
+
+.stats{
+margin-top:10px;
+color:#6b7280;
+font-size:13px;
+}
+
+.dark{
+background:#111827;
+color:white;
+}
+
+.dark .container{
+background:#1f2937;
+}
+
+.dark textarea,
+.dark input{
+background:#374151;
+color:white;
+border-color:#4b5563;
+}
+
+.dark .output{
+background:#374151;
+border-color:#4b5563;
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Customer Details Formatter</h2>
 
-    <p><b>Paste Details (One Per Line)</b></p>
+<h1>Customer Details Formatter Pro</h1>
 
-    <textarea id="input" placeholder="Example:
+<textarea id="rawData" placeholder="Paste customer details here..."></textarea>
 
-Rahul Sharma
-9876543210
-123456789
-Zomato
-Wow Momo Salt Lake
-Extra spicy"></textarea>
+<div class="stats">
+Characters: <span id="charCount">0</span>
+</div>
 
-    <br>
+<div class="buttons">
+<button class="primary" onclick="formatData()">Format</button>
+<button class="success" onclick="copyData()">Copy</button>
+<button class="danger" onclick="clearAll()">Clear</button>
+<button class="darkbtn" onclick="toggleDark()">Dark Mode</button>
+<button class="primary" onclick="downloadTxt()">Export TXT</button>
+</div>
 
-    <button class="format-btn" onclick="formatDetails()">
-        Format Details
-    </button>
+<div class="grid">
 
-    <button class="copy-btn" onclick="copyOutput()">
-        Copy Output
-    </button>
+<div class="field">
+<label>Name</label>
+<input id="name">
+</div>
 
-    <div class="output" id="output">
+<div class="field">
+<label>Phone Number</label>
+<input id="phone">
+</div>
+
+<div class="field">
+<label>Order ID</label>
+<input id="orderid">
+</div>
+
+<div class="field">
+<label>Order Place</label>
+<input id="orderplace">
+</div>
+
+<div class="field">
+<label>Outlet</label>
+<input id="outlet">
+</div>
+
+<div class="field">
+<label>Instruction</label>
+<input id="instruction">
+</div>
+
+</div>
+
+<div class="output" id="output">
 Formatted details will appear here...
-    </div>
+</div>
+
 </div>
 
 <script>
-function formatDetails() {
 
-    let lines = document
-        .getElementById("input")
-        .value
-        .split(/\r?\n/)
-        .map(x => x.trim())
-        .filter(x => x);
+const raw=document.getElementById("rawData");
 
-    let result =
-`Name : ${lines[0] || ""}
-Phone Number : ${lines[1] || ""}
-Order ID : ${lines[2] || ""}
-Order Place : ${lines[3] || ""}
-Outlet : ${lines[4] || ""}
-Instruction : ${lines.slice(5).join(" ") || ""}`;
+raw.addEventListener("input",()=>{
+document.getElementById("charCount").innerText=raw.value.length;
+});
 
-    document.getElementById("output").innerText = result;
+function formatData(){
+
+let lines=raw.value
+.split(/\r?\n/)
+.map(x=>x.trim())
+.filter(Boolean);
+
+document.getElementById("name").value=lines[0]||"";
+document.getElementById("phone").value=lines[1]||"";
+document.getElementById("orderid").value=lines[2]||"";
+document.getElementById("orderplace").value=lines[3]||"";
+document.getElementById("outlet").value=lines[4]||"";
+document.getElementById("instruction").value=lines.slice(5).join(" ");
+
+updateOutput();
 }
 
-async function copyOutput() {
+function updateOutput(){
 
-    let text = document.getElementById("output").innerText;
+let text=
+`Name : ${name.value}
+Phone Number : ${phone.value}
+Order ID : ${orderid.value}
+Order Place : ${orderplace.value}
+Outlet : ${outlet.value}
+Instruction : ${instruction.value}`;
 
-    try {
-        await navigator.clipboard.writeText(text);
-        alert("✅ Details copied successfully!");
-    } catch {
-        alert("❌ Unable to copy.");
-    }
+output.innerText=text;
+}
+
+document.querySelectorAll("input").forEach(i=>{
+i.addEventListener("input",updateOutput);
+});
+
+async function copyData(){
+await navigator.clipboard.writeText(output.innerText);
+alert("✅ Details copied successfully");
+}
+
+function clearAll(){
+raw.value="";
+document.querySelectorAll("input").forEach(i=>i.value="");
+output.innerText="Formatted details will appear here...";
+charCount.innerText="0";
+}
+
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+function downloadTxt(){
+
+const blob=new Blob([output.innerText],{
+type:"text/plain"
+});
+
+const a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download="customer-details.txt";
+a.click();
 }
 </script>
 
