@@ -1,934 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>For Aadhya ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Customer Details Formatter</title>
 
 <style>
-.progress{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:5px;
-background:rgba(255,255,255,.15);
-z-index:9999;
-}
-
-.bar{
-height:100%;
-width:0%;
-background:white;
-transition:width 6s linear;
-}
-
-@keyframes zoom{
-
-from{
-transform:scale(1);
-}
-
-to{
-transform:scale(1.08);
-}
-
-}
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
 body{
-background:#050816;
-overflow:hidden;
-height:100vh;
-color:white;
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    padding:30px;
 }
 
-/* STARS */
-
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-z-index:-2;
-background:
-radial-gradient(white 1px, transparent 1px);
-background-size:50px 50px;
-animation:moveStars 60s linear infinite;
+.container{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
 }
 
-@keyframes moveStars{
-from{transform:translateY(0);}
-to{transform:translateY(-500px);}
+h2{
+    text-align:center;
+    margin-bottom:20px;
 }
 
-/* HEARTS */
-
-.hearts{
-position:fixed;
-width:100%;
-height:100%;
-pointer-events:none;
-z-index:-1;
+textarea{
+    width:100%;
+    height:180px;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    resize:vertical;
+    font-size:14px;
 }
-
-.heart{
-position:absolute;
-font-size:22px;
-animation:float 10s linear infinite;
-opacity:.8;
-}
-
-@keyframes float{
-0%{
-transform:translateY(100vh);
-opacity:0;
-}
-20%{
-opacity:1;
-}
-100%{
-transform:translateY(-150px);
-opacity:0;
-}
-}
-
-/* SCREENS */
-
-.screen{
-position:absolute;
-width:100%;
-height:100%;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-padding:25px;
-}
-
-.active{
-display:flex;
-}
-
-/* GLASS CARD */
-
-.card{
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(20px);
-padding:30px;
-border-radius:30px;
-max-width:800px;
-width:90%;
-box-shadow:0 0 30px rgba(255,255,255,.05);
-}
-
-/* TITLE */
-
-.title{
-font-family:'Dancing Script',cursive;
-font-size:4rem;
-margin-bottom:15px;
-}
-
-/* BUTTON */
 
 button{
-padding:15px 30px;
-border:none;
-border-radius:50px;
-cursor:pointer;
-font-size:16px;
-font-weight:600;
-background:white;
-color:#ff4f81;
-margin-top:15px;
-transition:.3s;
+    margin-top:15px;
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    margin-right:10px;
 }
 
-button:hover{
-transform:scale(1.05);
+.format-btn{
+    background:#007bff;
+    color:white;
 }
 
-/* INPUT */
-
-input{
-padding:15px;
-border:none;
-border-radius:50px;
-width:280px;
-text-align:center;
-font-size:16px;
-margin-top:15px;
+.copy-btn{
+    background:#28a745;
+    color:white;
 }
 
-/* LOADER */
-
-.loader{
-width:300px;
-height:8px;
-background:rgba(255,255,255,.2);
-border-radius:999px;
-overflow:hidden;
-margin-top:20px;
+.output{
+    margin-top:20px;
+    background:#f8f9fa;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:15px;
+    white-space:pre-line;
+    min-height:120px;
 }
-
-.loader-fill{
-height:100%;
-width:0%;
-background:white;
-animation:load 4s linear forwards;
-}
-
-@keyframes load{
-from{width:0;}
-to{width:100%;}
-}
-
-.fadeText{
-animation:fade 2s infinite;
-}
-
-@keyframes fade{
-0%,100%{opacity:1;}
-50%{opacity:.5;}
-}
-
 </style>
-
 </head>
-
 <body>
 
-<div class="stars"></div>
-<div class="hearts" id="hearts"></div>
+<div class="container">
+    <h2>Customer Details Formatter</h2>
 
-<!-- LOADING -->
+    <p><b>Paste Details (One Per Line)</b></p>
 
-<div class="screen active" id="loading">
+    <textarea id="input" placeholder="Example:
 
-<div class="card">
+Rahul Sharma
+9876543210
+123456789
+Zomato
+Wow Momo Salt Lake
+Extra spicy"></textarea>
 
-<div class="title">For Aadhya ❤️</div>
+    <br>
 
-<p class="fadeText">
-Loading Memories...
-</p>
+    <button class="format-btn" onclick="formatDetails()">
+        Format Details
+    </button>
 
-<div class="loader">
-<div class="loader-fill"></div>
-</div>
+    <button class="copy-btn" onclick="copyOutput()">
+        Copy Output
+    </button>
 
-</div>
-
-</div>
-
-<!-- PASSWORD -->
-
-<div class="screen" id="password">
-
-<div class="card">
-
-<div class="title">
-Welcome ❤️
-</div>
-
-<p>
-
-This little website was made for only one person...
-
-<br><br>
-
-✨ Aadhya ✨
-
-</p>
-
-<input
-id="nameInput"
-placeholder="Enter what Parth calls you ❤️">
-
-<br>
-
-<button onclick="checkName()">
-Enter ❤️
-</button>
-
-
-  
-<p id="error"
-style="margin-top:15px;color:#ff7aa2;">
-</p>
-
-</div>
-
+    <div class="output" id="output">
+Formatted details will appear here...
+    </div>
 </div>
 
 <script>
+function formatDetails() {
 
-const photos=[
+    let lines = document
+        .getElementById("input")
+        .value
+        .split(/\r?\n/)
+        .map(x => x.trim())
+        .filter(x => x);
 
-"photo1.jpg",
-"photo2.jpg",
-"photo3.jpg",
-"photo4.jpg",
-"photo5.jpg",
-"photo6.jpg",
-"photo7.jpg",
-"photo8.jpg",
-"photo9.jpg",
-"photo10.jpg",
-"photo11.jpg",
-"photo12.jpg",
-"photo13.jpg",
-"photo14.jpg",
-"photo15.jpg"
+    let result =
+`Name : ${lines[0] || ""}
+Phone Number : ${lines[1] || ""}
+Order ID : ${lines[2] || ""}
+Order Place : ${lines[3] || ""}
+Outlet : ${lines[4] || ""}
+Instruction : ${lines.slice(5).join(" ") || ""}`;
 
-];
-
-const messages=[
-
-"From this little Malkin 👶❤️ to the beautiful girl you are today...",
-
-"This smile became one of my favorite things in the world ✨",
-
-"Every memory with you became a memory worth keeping 🤍",
-
-"You deserve patience, respect and care ❤️",
-
-"Your happiness means more to me than you know 🌙",
-
-"Even your cute anger is special to me 🙈",
-
-"Sometimes I catch myself smiling because I remembered you ❤️",
-
-"No matter how busy my day gets, thoughts of you always find their way back to me ✨",
-
-"You have a way of making ordinary moments feel special 🌹",
-
-"Your smile can brighten even the darkest day ☀️❤️",
-
-"Some people leave memories, you leave feelings forever 💫",
-
-"If I could keep one thing forever, it would be your smile 🥺❤️",
-
-"You are incredibly precious to me 🤍",
-
-"My favorite story will always be the one that includes you ❤️",
-
-"If I had a thousand chances, I'd still choose you ❤️"
-
-];
-
-let currentPhoto=0;
-
-function startStory(){
-
-document.getElementById("intro")
-.classList.remove("active");
-
-document.getElementById("story")
-.classList.add("active");
-
-document.getElementById("progressContainer")
-.style.display="block";
-
-document.getElementById("song")
-.play()
-.catch(()=>{});
-
-showSlide();
-
+    document.getElementById("output").innerText = result;
 }
 
-function showSlide(){
+async function copyOutput() {
 
-document.getElementById("photo").src = photos[currentPhoto];
-document.getElementById("storyText").innerHTML = messages[currentPhoto];
-document.getElementById("bar").style.width =
-((currentPhoto+1)/photos.length)*100+"%";
+    let text = document.getElementById("output").innerText;
 
-setTimeout(()=>{
-
-currentPhoto++;
-
-if(currentPhoto < photos.length){
-    showSlide();
-} else {
-    document.getElementById("story").classList.remove("active");
-    document.getElementById("reasons").classList.add("active");
-}
-
-},6000);
-
-}
-  
-
-/* LOADING */
-
-setTimeout(()=>{
-
-document.getElementById("loading")
-.classList.remove("active");
-
-document.getElementById("password")
-.classList.add("active");
-
-},4000);
-
-/* PASSWORD */
-
-function nextQ1(){
-
-document.getElementById("question1")
-.classList.remove("active");
-
-document.getElementById("question2")
-.classList.add("active");
-
-}
-
-function nextQ2(){
-
-document.getElementById("question2")
-.classList.remove("active");
-
-document.getElementById("truth")
-.classList.add("active");
-
-}
-
-function showCountdown(){
-
-document.getElementById("truth")
-.classList.remove("active");
-
-document.getElementById("countdown")
-.classList.add("active");
-
-let count=3;
-
-const timer=setInterval(()=>{
-
-count--;
-
-document.getElementById("countNumber")
-.innerHTML=count;
-
-if(count<=0){
-
-clearInterval(timer);
-
-document.getElementById("countdown")
-.classList.remove("active");
-
-document.getElementById("intro")
-.classList.add("active");
-
-}
-
-},1000);
-
-}  
-
-function checkName(){
-const value=
-document.getElementById("nameInput")
-.value
-.toLowerCase();
-
-if(
-value.includes("aadhya")
-){
-
-document.getElementById("password")
-.classList.remove("active");
-
-document.getElementById("question1")
-.classList.add("active");
-
-/* PART 2 STARTS HERE */
-
-}
-else{
-
-document.getElementById("error")
-.innerHTML=
-"Only Aadhya can enter 😤❤️";
-
-}
-
-}
-
-/* HEARTS */
-
-for(let i=0;i<40;i++){
-
-const heart=
-document.createElement("div");
-
-heart.className="heart";
-
-heart.innerHTML="❤️";
-
-heart.style.left=
-Math.random()*100+"%";
-
-heart.style.animationDuration=
-(5+Math.random()*8)+"s";
-
-document.getElementById("hearts")
-.appendChild(heart);
-
+    try {
+        await navigator.clipboard.writeText(text);
+        alert("✅ Details copied successfully!");
+    } catch {
+        alert("❌ Unable to copy.");
+    }
 }
 </script>
 
-<!-- QUESTION 1 -->
-
-<div class="screen" id="question1">
-
-<div class="card">
-
-<div class="title">
-Aadhya ❤️
-</div>
-
-<p>
-
-Before you continue...
-
-<br><br>
-
-Do you think Parth loves you? 🥺❤️
-
-</p>
-
-<br>
-
-<button onclick="nextQ1()">
-Yes ❤️
-</button>
-
-<button onclick="nextQ1()">
-Maybe 🤔
-</button>
-
-<button onclick="nextQ1()">
-I Don't Know 🥺
-</button>
-
-</div>
-
-</div>
-
-<!-- QUESTION 2 -->
-
-<div class="screen" id="question2">
-
-<div class="card">
-
-<div class="title">
-One More Question ❤️
-</div>
-
-<p>
-
-Have I made mistakes? 🥺
-
-</p>
-
-<br>
-
-<button onclick="nextQ2()">
-Yes 😒
-</button>
-
-<button onclick="nextQ2()">
-Definitely 😤
-</button>
-
-</div>
-
-</div>
-
-<!-- TRUTH -->
-
-<div class="screen" id="truth">
-
-<div class="card">
-
-<div class="title">
-You're Right ❤️
-</div>
-
-<p>
-
-I made mistakes.
-
-<br><br>
-
-And that's exactly why
-I made this little website for you. ❤️
-
-</p>
-
-<br>
-
-<button onclick="showCountdown()">
-Continue ❤️
-</button>
-
-</div>
-
-</div>
-
-<!-- COUNTDOWN -->
-
-<div class="screen" id="countdown">
-
-<div class="card">
-
-<div class="title" id="countNumber">
-
-3
-
-</div>
-
-<p>
-
-Our Story Begins In...
-
-</p>
-
-</div>
-
-</div>
-
-<!-- STORY INTRO -->
-
-<div class="screen" id="intro">
-
-<div class="card">
-
-<div class="title">
-
-Aadhya ❤️
-
-</div>
-
-<p style="line-height:2;">
-
-Before my final words...
-
-I want to show you something.
-
-✨
-
-A few moments...
-
-A few memories...
-
-And a few things my heart
-has always wanted to tell you. ❤️
-
-</p>
-
-<br>
-
-<button onclick="startStory()">
-
-Show Me ❤️
-
-</button>
-
-</div>
-
-</div>
-
-<!-- SONG -->
-
-<audio id="song" loop>
-<source src="song.mp3" type="audio/mpeg">
-</audio>
-
-<!-- PROGRESS BAR -->
-
-<div class="progress" id="progressContainer" style="display:none;">
-
-<div class="bar" id="bar"></div>
-
-</div>
-
-<!-- STORY -->
-
-<div class="screen" id="story">
-
-<img
-id="photo"
-src="photo1.jpg"
-style="
-width:90%;
-max-width:420px;
-height:70vh;
-object-fit:cover;
-border-radius:25px;
-box-shadow:0 10px 40px rgba(0,0,0,.5);
-animation:zoom 6s linear forwards;
-">
-
-<div
-class="card"
-style="
-margin-top:20px;
-max-width:700px;
-">
-
-<p
-id="storyText"
-style="
-line-height:2;
-font-size:18px;
-">
-
-Loading...
-
-</p>
-
-</div>
-
-</div>  
-
-
-<!-- REASONS -->
-
-<div class="screen" id="reasons">
-
-<div class="card">
-
-<div class="title">
-10 Reasons Why I Love You ❤️
-</div>
-
-<div style="line-height:2;">
-
-❤️ Your smile<br>
-❤️ Your kindness<br>
-❤️ Your cute anger<br>
-❤️ Your honesty<br>
-❤️ Your caring nature<br>
-❤️ Your beautiful eyes<br>
-❤️ Your laugh<br>
-❤️ Your heart<br>
-❤️ Your personality<br>
-❤️ Simply because you're Aadhya
-
-</div>
-
-<br>
-
-<button onclick="showPromise()">
-One More Thing ❤️
-</button>
-
-</div>
-
-</div>
-
-<!-- PROMISE -->
-
-<div class="screen" id="promise">
-
-<div class="card">
-
-<div class="title">
-My Promise ❤️
-</div>
-
-<p style="line-height:2;">
-
-✓ To listen better ❤️<br>
-
-✓ To understand your feelings ❤️<br>
-
-✓ To respect your emotions ❤️<br>
-
-✓ To be patient ❤️<br>
-
-✓ To keep choosing you ❤️
-
-</p>
-
-<br>
-
-<button onclick="showLetter()">
-Read My Heart ❤️
-</button>
-
-</div>
-
-</div>
-
-<!-- LOVE LETTER -->
-
-<div class="screen" id="letter">
-
-<div class="card">
-
-<div class="title">
-Dear Aadhya ❤️
-</div>
-
-<p style="line-height:2;">
-
-Maybe I can't erase every mistake.
-
-<br><br>
-
-Maybe I can't instantly fix every hurt.
-
-<br><br>
-
-But I can choose to become better.
-
-<br><br>
-
-Not because I have to...
-
-<br><br>
-
-Because you're worth it. ❤️
-
-<br><br>
-
-Thank you for every smile.
-
-<br>
-
-Thank you for every memory.
-
-<br>
-
-Thank you for being you. ❤️
-
-<br><br>
-
-I Love You My Sweetheart ❤️
-
-<br><br>
-
-— Parth
-
-</p>
-
-<br>
-
-<button onclick="showForever()">
-Forever ❤️
-</button>
-
-</div>
-
-</div>
-
-<!-- FOREVER -->
-
-<div class="screen" id="forever">
-
-<div class="card">
-
-<div class="title">
-Forever Yours ❤️
-</div>
-
-<p style="line-height:2;">
-
-Aadhyaaa Malkin ❤️
-
-<br><br>
-
-No matter what happens...
-
-<br>
-
-You will always be special to me ❤️
-
-<br><br>
-
-My Babyyyyyyyyyyyyy 🙈🤧❤️🫰💫🔮💓💋
-
-</p>
-
-<br>
-
-<a
-href="https://digibouquet.net/create-bouquet?b=JTdCJTIyZiUyMiUzQSU1QiUyMnBlb255JTIyJTJDJTIyZGFpc3klMjIlMkMlMjJ0dWxpcCUyMiUyQyUyMnJvc2UlMjIlMkMlMjJvcmNoaWQlMjIlMkMlMjJsaWx5JTIyJTJDJTIybG90dXMlMjIlMkMlMjJjYW1lbGxpYSUyMiU1RCUyQyUyMmclMjIlM0ElMjJncmVlbmVyeTMlMjIlMkMlMjJjJTIyJTNBJTIydG9ybi12aW50YWdlJTIyJTJDJTIydG8lMjIlM0ElMjJBYWRoeWElMjBEZWFyJTIyJTJDJTIyZnIlMjIlM0ElMjJQYXJ0aCUyMHVyJTIwYmFkbWFzaCUyMiUyQyUyMm0lMjIlM0ElMjJNeSUyMExvdmUlMjB5b3UlMjBpcyUyMGVuZGxlc3MlMjBhbmQlMjB0aGlzJTIwZmxvd2VyJTIwaXMlMjBtYWRlZCUyMGZvciUyMHlvdSUyMGklMjBrbm93JTIwaXQncyUyMHZpcnR1YWxseSUyMGJ1dCUyMHNtZWxsJTIwdGhlbSUyMGhhaGElMjIlMkMlMjJiZyUyMiUzQSUyMmdvbGRlbi1ob3VyJTIyJTdE"
-target="_blank"
-style="
-display:inline-block;
-padding:15px 25px;
-background:white;
-color:#ff4f81;
-border-radius:50px;
-text-decoration:none;
-font-weight:bold;
-">
-
-🌹 Open Your Surprise ❤️
-
-</a>
-
-</div>
-
-</div>  
-
-<script>
-function showReasons(){
-
-document.getElementById("story")
-.classList.remove("active");
-
-document.getElementById("reasons")
-.classList.add("active");
-
-}
-
-function showPromise(){
-
-document.getElementById("reasons")
-.classList.remove("active");
-
-document.getElementById("promise")
-.classList.add("active");
-
-}
-
-function showLetter(){
-
-document.getElementById("promise")
-.classList.remove("active");
-
-document.getElementById("letter")
-.classList.add("active");
-
-}
-
-function showForever(){
-
-document.getElementById("letter")
-.classList.remove("active");
-
-document.getElementById("forever")
-.classList.add("active");
-
-}
-  
-</script>
 </body>
 </html>
