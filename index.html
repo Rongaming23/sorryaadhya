@@ -268,7 +268,15 @@ Generated case note will appear here...
 <h2 style="margin-top:20px;">
 Recent Cases
 </h2>
-
+  
+<input
+  type="text"
+  id="searchBox"
+  placeholder="Search by Order ID..."
+  onkeyup="renderHistory()"
+  style="width:100%; padding:10px; margin-top:10px; border-radius:10px;"
+>
+  
 <div id="history" class="history"></div>
 
 </div>
@@ -288,27 +296,24 @@ Outlet : ${document.getElementById("outlet").value}
 Issue Type :
 ${document.getElementById("issueType").value} ${document.getElementById("customerConcern").value}`;
 
-
-
 document.getElementById("output").innerText = note;
 
 saveHistory();
 }
-  
+
 async function copyCase(){
 
-await navigator.clipboard.writeText(
-output.innerText
-);
+let text = document.getElementById("output").innerText;
+
+await navigator.clipboard.writeText(text);
 
 alert("Case copied successfully!");
 }
-
+  
 function clearForm(){
 
-document.querySelectorAll(
-"input, textarea"
-).forEach(e=>e.value="");
+document.querySelectorAll("input, textarea")
+.forEach(e=>e.value="");
 
 output.innerText=
 "Generated case note will appear here...";
@@ -316,11 +321,8 @@ output.innerText=
 
 function saveHistory(){
 
-let history=
-JSON.parse(
-localStorage.getItem("caseHistory")
-|| "[]"
-);
+let history =
+JSON.parse(localStorage.getItem("caseHistory") || "[]");
 
 history.unshift({
 name: document.getElementById("name").value,
@@ -330,97 +332,138 @@ issue: document.getElementById("issueType").value,
 date: new Date().toLocaleString()
 });
 
-history=history.slice(0,50);
+history = history.slice(0,50);
 
-localStorage.setItem(
-"caseHistory",
-JSON.stringify(history)
-);
+localStorage.setItem("caseHistory", JSON.stringify(history));
 
 renderHistory();
-
 updateStats();
 }
 
+/* =========================
+   🚀 UPGRADED HISTORY SYSTEM
+========================= */
+
 function renderHistory(){
 
-let history = JSON.parse(
-localStorage.getItem("caseHistory") || "[]"
-);
+let history = JSON.parse(localStorage.getItem("caseHistory") || "[]");
 
-document.getElementById("history").innerHTML =
-history.map((item,index)=>`
+let searchBox = document.getElementById("searchBox");
+let searchValue = searchBox ? searchBox.value.toLowerCase().trim() : "";
+
+// 🔍 SAFE FILTER (prevents crash if order is undefined)
+if(searchValue){
+history = history.filter(item =>
+(item.order || "").toLowerCase().includes(searchValue)
+);
+}
+
+let container = document.getElementById("history");
+
+// ❗ HARD CHECK (prevents silent failure)
+if(!container){
+console.error("ERROR: history div not found");
+return;
+}
+
+// empty state
+if(history.length === 0){
+container.innerHTML = `<div style="color:#aaa;">No recent cases found</div>`;
+return;
+}
+
+// highlight function
+function highlight(text){
+if(!searchValue) return text || "";
+return (text || "").replaceAll(
+searchValue,
+`<mark style="background:yellow;color:black;">${searchValue}</mark>`
+);
+}
+
+container.innerHTML = "";
+
+// build UI
+history.forEach((item, index) => {
+
+container.innerHTML += `
 <div class="history-item">
-${item.name}<br>
-${item.order}<br>
-${item.concern}<br>
-${item.issue}<br>
-<small>${item.date}</small>
+
+Name:</b> ${item.name || ""}<br>
+Order:</b> ${item.order || ""}<br>
+Concern:<b> ${item.concern || ""}<br>
+Issue:</b> ${item.issue || ""}<br>
+<small>${item.date || ""}</small>
+
 <br><br>
 
-<button
-class="danger"
-onclick="deleteCase(${index})">
+<button class="danger" onclick="deleteCase(${index})">
 Delete
 </button>
 
 </div>
-`).join("");
+`;
+
+});
 
 }
+  
+/* =========================
+   🚀 SAFE DELETE (SEARCH SAFE)
+========================= */
 
 function deleteCase(index){
 
-let history = JSON.parse(
-localStorage.getItem("caseHistory") || "[]"
+let history = JSON.parse(localStorage.getItem("caseHistory") || "[]");
+
+let searchValue = document.getElementById("searchBox")?.value.toLowerCase().trim();
+
+if(searchValue){
+
+let filtered = history.filter(item =>
+(item.order || "").toLowerCase().includes(searchValue)
 );
+
+let realItem = filtered[index];
+
+index = history.findIndex(x =>
+x.order === realItem.order &&
+x.date === realItem.date
+);
+
+}
 
 history.splice(index,1);
 
-localStorage.setItem(
-"caseHistory",
-JSON.stringify(history)
-);
+localStorage.setItem("caseHistory", JSON.stringify(history));
 
 renderHistory();
 updateStats();
-
 }
 
+/* =========================
+   📊 STATS (SAFE VERSION)
+========================= */
 
 function updateStats(){
 
-let history=
-JSON.parse(
-localStorage.getItem("caseHistory")
-|| "[]"
-);
+let history = JSON.parse(localStorage.getItem("caseHistory") || "[]");
 
-totalCases.innerText=
-history.length;
+document.getElementById("totalCases").innerText = history.length;
 
-refundCases.innerText=
-history.filter(x=>
-x.issue==="Refund Request"
-).length;
+document.getElementById("refundCases").innerText =
+history.filter(x => x.issue === "Refund Request").length;
 
-complaintCases.innerText=
-history.filter(x=>
-x.issue.includes("Complaint")
-).length;
+document.getElementById("complaintCases").innerText =
+history.filter(x => x.issue.includes("Complaint")).length;
 
-escalationCases.innerText=
-history.filter(x=>
-x.issue!=="Business Query"
-).length;
+document.getElementById("escalationCases").innerText =
+history.filter(x => x.issue !== "Business Query").length;
 
 }
 
+/* INIT */
 renderHistory();
 updateStats();
 
 </script>
-
-</div>
-</body>
-</html>
