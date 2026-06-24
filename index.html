@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customer Details Formatter Pro</title>
+<title>Wow Cx Data Dashboard Pro By Parth</title>
 
 <style>
 *{
@@ -13,113 +13,137 @@ box-sizing:border-box;
 font-family:'Segoe UI',sans-serif;
 }
 
+:root{
+--bg:#0f172a;
+--card:#111827;
+--card2:#1e293b;
+--accent:#3b82f6;
+--success:#22c55e;
+--danger:#ef4444;
+--text:#f8fafc;
+}
+
 body{
-background:#f4f7fc;
-padding:30px;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:var(--text);
+min-height:100vh;
+padding:20px;
 }
 
 .container{
-max-width:900px;
+max-width:1400px;
 margin:auto;
-background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 8px 25px rgba(0,0,0,.1);
 }
 
-h1{
-text-align:center;
-color:#2563eb;
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
 margin-bottom:20px;
 }
 
-textarea{
-width:100%;
-height:180px;
-padding:15px;
-border:1px solid #d1d5db;
-border-radius:10px;
-resize:none;
-font-size:14px;
+.card{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(15px);
+border-radius:20px;
+padding:20px;
+box-shadow:0 8px 30px rgba(0,0,0,.2);
 }
 
-.buttons{
-margin-top:15px;
-display:flex;
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.stat-card{
+padding:20px;
+border-radius:16px;
+background:var(--card);
+}
+
+.stat-card h2{
+font-size:32px;
+margin-top:10px;
+}
+
+.main{
+display:grid;
+grid-template-columns:1.3fr 1fr;
+gap:20px;
+}
+
+textarea,input,select{
+width:100%;
+padding:12px;
+margin-top:5px;
+margin-bottom:15px;
+background:var(--card2);
+border:1px solid #334155;
+border-radius:10px;
+color:white;
+}
+
+textarea{
+height:180px;
+resize:none;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
 gap:10px;
-flex-wrap:wrap;
 }
 
 button{
 padding:12px 18px;
 border:none;
-border-radius:8px;
+border-radius:10px;
 cursor:pointer;
+margin-right:10px;
+margin-bottom:10px;
 font-weight:600;
 }
 
-.primary{background:#2563eb;color:white;}
-.success{background:#16a34a;color:white;}
-.danger{background:#dc2626;color:white;}
-.darkbtn{background:#111827;color:white;}
-
-.grid{
-margin-top:20px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
+.primary{
+background:var(--accent);
+color:white;
 }
 
-.field{
-display:flex;
-flex-direction:column;
+.success{
+background:var(--success);
+color:white;
 }
 
-.field label{
-font-weight:600;
-margin-bottom:5px;
-}
-
-.field input{
-padding:10px;
-border:1px solid #d1d5db;
-border-radius:8px;
+.danger{
+background:var(--danger);
+color:white;
 }
 
 .output{
-margin-top:20px;
-background:#f9fafb;
-border:1px solid #d1d5db;
+background:var(--card2);
 padding:15px;
 border-radius:10px;
-white-space:pre-line;
+white-space:pre-wrap;
+min-height:250px;
 }
 
-.stats{
-margin-top:10px;
-color:#6b7280;
-font-size:13px;
+.history{
+max-height:300px;
+overflow:auto;
+margin-top:15px;
 }
 
-.dark{
-background:#111827;
-color:white;
+.history-item{
+padding:10px;
+border-bottom:1px solid #334155;
 }
 
-.dark .container{
-background:#1f2937;
+@media(max-width:900px){
+.main{
+grid-template-columns:1fr;
 }
-
-.dark textarea,
-.dark input{
-background:#374151;
-color:white;
-border-color:#4b5563;
-}
-
-.dark .output{
-background:#374151;
-border-color:#4b5563;
 }
 </style>
 </head>
@@ -127,132 +151,288 @@ border-color:#4b5563;
 
 <div class="container">
 
-<h1>Customer Details Formatter Pro</h1>
-
-<textarea id="rawData" placeholder="Paste customer details here..."></textarea>
+<div class="header">
+<h1>🎫 Customer Support Dashboard Pro</h1>
+</div>
 
 <div class="stats">
-Characters: <span id="charCount">0</span>
+
+<div class="stat-card">
+<div>Total Cases</div>
+<h2 id="totalCases">0</h2>
 </div>
 
-<div class="buttons">
-<button class="primary" onclick="formatData()">Format</button>
-<button class="success" onclick="copyData()">Copy</button>
-<button class="danger" onclick="clearAll()">Clear</button>
-<button class="darkbtn" onclick="toggleDark()">Dark Mode</button>
-<button class="primary" onclick="downloadTxt()">Export TXT</button>
+<div class="stat-card">
+<div>Refund Requests</div>
+<h2 id="refundCases">0</h2>
 </div>
 
-<div class="grid">
+<div class="stat-card">
+<div>Complaints</div>
+<h2 id="complaintCases">0</h2>
+</div>
 
-<div class="field">
+<div class="stat-card">
+<div>Escalations</div>
+<h2 id="escalationCases">0</h2>
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2>Customer Details</h2>
+
+<textarea id="rawData"
+placeholder="Paste customer details here..."></textarea>
+
+<button class="primary" onclick="autoFill()">
+Auto Fill
+</button>
+
+<div class="row">
+
+<div>
 <label>Name</label>
 <input id="name">
 </div>
 
-<div class="field">
+<div>
 <label>Phone Number</label>
 <input id="phone">
 </div>
 
-<div class="field">
+<div>
 <label>Order ID</label>
-<input id="orderid">
+<input id="orderId">
 </div>
 
-<div class="field">
+<div>
 <label>Order Place</label>
-<input id="orderplace">
+<input id="orderPlace">
 </div>
 
-<div class="field">
+<div>
 <label>Outlet</label>
 <input id="outlet">
 </div>
 
-<div class="field">
-<label>Instruction</label>
-<input id="instruction">
+<div>
+<label>Complain was</label>
+<input id="complain">
 </div>
 
 </div>
 
-<div class="output" id="output">
-Formatted details will appear here...
+<label>Issue Type</label>
+
+<select id="reason">
+
+<option>Missing Item</option>
+<option>Cancel Request</option>
+<option>Wrong Order</option>
+<option>Delayed Order</option>
+<option>Veg / Non-Veg Concern</option>
+<option>Refund Request</option>
+<option>Bulk Order Query</option>
+<option>Complaint</option>
+<option>Business Query</option>
+<option>Food Quality Issue</option>
+<option>Packaging Issue</option>
+<option>Payment Issue</option>
+<option>Outlet Complaint</option>
+<option>Delivery Partner Issue</option>
+<option>Other</option>
+
+</select>
+
+<label>Priority</label>
+
+<select id="priority">
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+
+<button class="primary" onclick="generateCase()">
+Generate Case
+</button>
+
+<button class="success" onclick="copyCase()">
+Copy
+</button>
+
+<button class="danger" onclick="clearForm()">
+Clear
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Generated Note</h2>
+
+<div id="output" class="output">
+Generated case note will appear here...
+</div>
+
+<h2 style="margin-top:20px;">
+Recent Cases
+</h2>
+
+<div id="history" class="history"></div>
+
 </div>
 
 </div>
 
 <script>
 
-const raw=document.getElementById("rawData");
+function autoFill(){
 
-raw.addEventListener("input",()=>{
-document.getElementById("charCount").innerText=raw.value.length;
-});
-
-function formatData(){
-
-let lines=raw.value
+let lines=document
+.getElementById("rawData")
+.value
 .split(/\r?\n/)
-.map(x=>x.trim())
 .filter(Boolean);
 
-document.getElementById("name").value=lines[0]||"";
-document.getElementById("phone").value=lines[1]||"";
-document.getElementById("orderid").value=lines[2]||"";
-document.getElementById("orderplace").value=lines[3]||"";
-document.getElementById("outlet").value=lines[4]||"";
-document.getElementById("instruction").value=lines.slice(5).join(" ");
+document.getElementById("name").value = lines[0] || "";
+document.getElementById("phone").value = lines[1] || "";
+document.getElementById("orderId").value = lines[2] || "";
+document.getElementById("orderPlace").value = lines[3] || "";
+document.getElementById("outlet").value = lines[4] || "";
+document.getElementById("complain").value = lines.slice(5).join(" ");
 
-updateOutput();
 }
 
-function updateOutput(){
+function generateCase(){
 
-let text=
-`Name : ${name.value}
-Phone Number : ${phone.value}
-Order ID : ${orderid.value}
-Order Place : ${orderplace.value}
-Outlet : ${outlet.value}
-Instruction : ${instruction.value}`;
+let note=
+`Name : ${document.getElementById("name").value}
+Phone Number : ${document.getElementById("phone").value}
+Order ID : ${document.getElementById("orderId").value}
+Order Place : ${document.getElementById("orderPlace").value}
+Outlet : ${document.getElementById("outlet").value}
 
-output.innerText=text;
+Issue Type : ${document.getElementById("reason").value}
+Priority : ${document.getElementById("priority").value}
+
+Complain :
+${document.getElementById("complain").value}
+
+Action Taken :
+Customer was assisted and informed regarding the next steps.
+
+Status :
+Pending Review`;
+
+document.getElementById("output").innerText = note;
+
+saveHistory();
 }
 
-document.querySelectorAll("input").forEach(i=>{
-i.addEventListener("input",updateOutput);
+async function copyCase(){
+
+await navigator.clipboard.writeText(
+output.innerText
+);
+
+alert("Case copied successfully!");
+}
+
+function clearForm(){
+
+document.querySelectorAll(
+"input, textarea"
+).forEach(e=>e.value="");
+
+output.innerText=
+"Generated case note will appear here...";
+}
+
+function saveHistory(){
+
+let history=
+JSON.parse(
+localStorage.getItem("caseHistory")
+|| "[]"
+);
+
+history.unshift({
+name: document.getElementById("name").value,
+issue: document.getElementById("reason").value,
+date: new Date().toLocaleString()
 });
 
-async function copyData(){
-await navigator.clipboard.writeText(output.innerText);
-alert("✅ Details copied successfully");
+history=history.slice(0,50);
+
+localStorage.setItem(
+"caseHistory",
+JSON.stringify(history)
+);
+
+renderHistory();
+
+updateStats();
 }
 
-function clearAll(){
-raw.value="";
-document.querySelectorAll("input").forEach(i=>i.value="");
-output.innerText="Formatted details will appear here...";
-charCount.innerText="0";
+function renderHistory(){
+
+let history=
+JSON.parse(
+localStorage.getItem("caseHistory")
+|| "[]"
+);
+
+document.getElementById(
+"history"
+).innerHTML=
+
+history.map(item=>`
+<div class="history-item">
+<b>${item.name}</b><br>
+${item.issue}<br>
+<small>${item.date}</small>
+</div>
+`).join("");
+
 }
 
-function toggleDark(){
-document.body.classList.toggle("dark");
+function updateStats(){
+
+let history=
+JSON.parse(
+localStorage.getItem("caseHistory")
+|| "[]"
+);
+
+totalCases.innerText=
+history.length;
+
+refundCases.innerText=
+history.filter(x=>
+x.issue==="Refund Request"
+).length;
+
+complaintCases.innerText=
+history.filter(x=>
+x.issue.includes("Complaint")
+).length;
+
+escalationCases.innerText=
+history.filter(x=>
+x.issue!=="Business Query"
+).length;
+
 }
 
-function downloadTxt(){
+renderHistory();
+updateStats();
 
-const blob=new Blob([output.innerText],{
-type:"text/plain"
-});
-
-const a=document.createElement("a");
-a.href=URL.createObjectURL(blob);
-a.download="customer-details.txt";
-a.click();
-}
 </script>
 
+</div>
 </body>
 </html>
