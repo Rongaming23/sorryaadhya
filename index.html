@@ -324,13 +324,12 @@ alert("Case copied successfully!");
 }
   
 function clearForm(){
-
 document.querySelectorAll("input, textarea")
-.forEach(e=>e.value="");
+.forEach(e => e.value = "");
 
 document.getElementById("output").innerText =
 "Generated case note will appear here...";
-}
+  }
   
 function saveHistory(){
 
@@ -369,7 +368,7 @@ history = history.filter(item =>
 );
 }
 
-le container = document.getElementById("history");
+let container = document.getElementById("history");
 
 if(history.length === 0){
 container.innerHTML = `<div style="color:#aaa;">No recent cases found</div>`;
@@ -450,14 +449,13 @@ let history = JSON.parse(localStorage.getItem(key) || "[]");
 document.getElementById("totalCases").innerText = history.length;
 
 document.getElementById("refundCases").innerText =
-history.filter(x => x.issue === "Refund Request").length;
+history.filter(x => (x.issue || "").includes("Refund Request")).length;
 
 document.getElementById("complaintCases").innerText =
-history.filter(x => x.issue.includes("Complaint")).length;
+history.filter(x => (x.issue || "").includes("Complaint")).length;
 
 document.getElementById("escalationCases").innerText =
-history.filter(x => x.issue !== "Business Query").length;
-
+history.filter(x => (x.issue || "").includes("Business Query")).length;
 }
 
 /* INIT */
