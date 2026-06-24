@@ -1,118 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>For Aadhya ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;document.getElementById('story').classList.remove('active');
-
-document.getElementById('videoScreen').classList.add('active');
-
-const video=document.getElementById('loveVideo');
-
-video.play().catch(()=>{});
-
-video.onended=function(){
-
-document.getElementById('videoScreen').classList.remove('active');
-
-document.getElementById('final').classList.add('active');
-
-};
-
-return;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:linear-gradient(135deg,#0f172a,#1e293b);
-height:100vh;
-overflow:hidden;
-color:white;
-}
-
-.screen,.story{
-position:absolute;
-width:100%;
-height:100%;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-padding:20px;
-text-align:center;
-animation:fade 1s;
-}
-
-.active{
-display:flex;
-}
-
-@keyframes fade{
-from{opacity:0;}
-to{opacity:1;}
-}
-
-.card{
-background:rgba(255,255,255,.12);
-backdrop-filter:blur(15px);
-padding:25px;
-border-radius:25px;
-max-width:850px;
-width:90%;
-}
-
-h1{
-font-family:'Dancing Script',cursive;
-font-size:3rem;
-margin-bottom:15px;
-}
-
-button{
-margin:10px;
-padding:14px 28px;
-border:none;
-border-radius:50px;
-font-size:16px;
-font-weight:600;
-cursor:pointer;
-background:white;
-color:#ff4f81;
-}
-
-.story img{
-width:90%;
-max-width:380px;
-height:70vh;
-object-fit:cover;
-border-radius:25px;
-box-shadow:0 10px 40px rgba(0,0,0,.5);
-}
-
-.message{
-margin-top:20px;
-background:rgba(255,255,255,.12);
-padding:20px;
-border-radius:20px;
-max-width:700px;
-line-height:1.8;
-}
-
 .progress{
 position:fixed;
 top:0;
 left:0;
 width:100%;
-height:4px;
-background:rgba(255,255,255,.2);
-z-index:999;
+height:5px;
+background:rgba(255,255,255,.15);
+z-index:9999;
 }
 
 .bar{
@@ -122,124 +27,841 @@ background:white;
 transition:width 6s linear;
 }
 
-video{
-width:100%;
-max-width:420px;
-border-radius:25px;
+@keyframes zoom{
+
+from{
+transform:scale(1);
 }
 
-audio{
-display:none;
+to{
+transform:scale(1.08);
 }
+
+}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050816;
+overflow:hidden;
+height:100vh;
+color:white;
+}
+
+/* STARS */
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-2;
+background:
+radial-gradient(white 1px, transparent 1px);
+background-size:50px 50px;
+animation:moveStars 60s linear infinite;
+}
+
+@keyframes moveStars{
+from{transform:translateY(0);}
+to{transform:translateY(-500px);}
+}
+
+/* HEARTS */
+
+.hearts{
+position:fixed;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:-1;
+}
+
+.heart{
+position:absolute;
+font-size:22px;
+animation:float 10s linear infinite;
+opacity:.8;
+}
+
+@keyframes float{
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+20%{
+opacity:1;
+}
+100%{
+transform:translateY(-150px);
+opacity:0;
+}
+}
+
+/* SCREENS */
+
+.screen{
+position:absolute;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:25px;
+}
+
+.active{
+display:flex;
+}
+
+/* GLASS CARD */
+
+.card{
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+padding:30px;
+border-radius:30px;
+max-width:800px;
+width:90%;
+box-shadow:0 0 30px rgba(255,255,255,.05);
+}
+
+/* TITLE */
+
+.title{
+font-family:'Dancing Script',cursive;
+font-size:4rem;
+margin-bottom:15px;
+}
+
+/* BUTTON */
+
+button{
+padding:15px 30px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+font-size:16px;
+font-weight:600;
+background:white;
+color:#ff4f81;
+margin-top:15px;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* INPUT */
+
+input{
+padding:15px;
+border:none;
+border-radius:50px;
+width:280px;
+text-align:center;
+font-size:16px;
+margin-top:15px;
+}
+
+/* LOADER */
+
+.loader{
+width:300px;
+height:8px;
+background:rgba(255,255,255,.2);
+border-radius:999px;
+overflow:hidden;
+margin-top:20px;
+}
+
+.loader-fill{
+height:100%;
+width:0%;
+background:white;
+animation:load 4s linear forwards;
+}
+
+@keyframes load{
+from{width:0;}
+to{width:100%;}
+}
+
+.fadeText{
+animation:fade 2s infinite;
+}
+
+@keyframes fade{
+0%,100%{opacity:1;}
+50%{opacity:.5;}
+}
+
 </style>
+
 </head>
 
 <body>
+
+<div class="stars"></div>
+<div class="hearts" id="hearts"></div>
+
+<!-- LOADING -->
+
+<div class="screen active" id="loading">
+
+<div class="card">
+
+<div class="title">For Aadhya ❤️</div>
+
+<p class="fadeText">
+Loading Memories...
+</p>
+
+<div class="loader">
+<div class="loader-fill"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- PASSWORD -->
+
+<div class="screen" id="password">
+
+<div class="card">
+
+<div class="title">
+Welcome ❤️
+</div>
+
+<p>
+
+This little website was made for only one person...
+
+<br><br>
+
+✨ Aadhya ✨
+
+</p>
+
+<input
+id="nameInput"
+placeholder="Enter your nickname ❤️">
+
+<br>
+
+<button onclick="checkName()">
+Enter ❤️
+</button>
+
+
+  
+<p id="error"
+style="margin-top:15px;color:#ff7aa2;">
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const photos=[
+
+"photo1.jpg",
+"photo2.jpg",
+"photo3.jpg",
+"photo4.jpg",
+"photo5.jpg",
+"photo6.jpg",
+"photo7.jpg",
+"photo8.jpg",
+"photo9.jpg",
+"photo10.jpg",
+"photo11.jpg",
+"photo12.jpg",
+"photo13.jpg",
+"photo14.jpg",
+"photo15.jpg"
+
+];
+
+const messages=[
+
+"From this little Malkin 👶❤️ to the beautiful girl you are today...",
+
+"This smile became one of my favorite things in the world ✨",
+
+"Every memory with you became a memory worth keeping 🤍",
+
+"You deserve patience, respect and care ❤️",
+
+"Your happiness means more to me than you know 🌙",
+
+"Even your cute anger is special to me 🙈",
+
+"Sometimes I catch myself smiling because I remembered you ❤️",
+
+"No matter how busy my day gets, thoughts of you always find their way back to me ✨",
+
+"You have a way of making ordinary moments feel special 🌹",
+
+"Your smile can brighten even the darkest day ☀️❤️",
+
+"Some people leave memories, you leave feelings forever 💫",
+
+"If I could keep one thing forever, it would be your smile 🥺❤️",
+
+"You are incredibly precious to me 🤍",
+
+"My favorite story will always be the one that includes you ❤️",
+
+"If I had a thousand chances, I'd still choose you ❤️"
+
+];
+
+let currentPhoto=0;
+
+function startStory(){
+
+document.getElementById("intro")
+.classList.remove("active");
+
+document.getElementById("story")
+.classList.add("active");
+
+document.getElementById("progressContainer")
+.style.display="block";
+
+document.getElementById("song")
+.play()
+.catch(()=>{});
+
+showSlide();
+
+}
+
+function showSlide(){
+
+document.getElementById("photo").src = photos[currentPhoto];
+document.getElementById("storyText").innerHTML = messages[currentPhoto];
+document.getElementById("bar").style.width =
+((currentPhoto+1)/photos.length)*100+"%";
+
+setTimeout(()=>{
+
+currentPhoto++;
+
+if(currentPhoto < photos.length){
+    showSlide();
+} else {
+    document.getElementById("story").classList.remove("active");
+    document.getElementById("reasons").classList.add("active");
+}
+
+},6000);
+
+}
+  
+
+/* LOADING */
+
+setTimeout(()=>{
+
+document.getElementById("loading")
+.classList.remove("active");
+
+document.getElementById("password")
+.classList.add("active");
+
+},4000);
+
+/* PASSWORD */
+
+function nextQ1(){
+
+document.getElementById("question1")
+.classList.remove("active");
+
+document.getElementById("question2")
+.classList.add("active");
+
+}
+
+function nextQ2(){
+
+document.getElementById("question2")
+.classList.remove("active");
+
+document.getElementById("truth")
+.classList.add("active");
+
+}
+
+function showCountdown(){
+
+document.getElementById("truth")
+.classList.remove("active");
+
+document.getElementById("countdown")
+.classList.add("active");
+
+let count=3;
+
+const timer=setInterval(()=>{
+
+count--;
+
+document.getElementById("countNumber")
+.innerHTML=count;
+
+if(count<=0){
+
+clearInterval(timer);
+
+document.getElementById("countdown")
+.classList.remove("active");
+
+document.getElementById("intro")
+.classList.add("active");
+
+}
+
+},1000);
+
+}  
+
+function checkName(){
+const value=
+document.getElementById("nameInput")
+.value
+.toLowerCase();
+
+if(
+value.includes("aadhya")
+){
+
+document.getElementById("password")
+.classList.remove("active");
+
+document.getElementById("question1")
+.classList.add("active");
+
+/* PART 2 STARTS HERE */
+
+}
+else{
+
+document.getElementById("error")
+.innerHTML=
+"Only Aadhya can enter 😤❤️";
+
+}
+
+}
+
+/* HEARTS */
+
+for(let i=0;i<40;i++){
+
+const heart=
+document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=
+Math.random()*100+"%";
+
+heart.style.animationDuration=
+(5+Math.random()*8)+"s";
+
+document.getElementById("hearts")
+.appendChild(heart);
+
+}
+</script>
+
+<!-- QUESTION 1 -->
+
+<div class="screen" id="question1">
+
+<div class="card">
+
+<div class="title">
+Aadhya ❤️
+</div>
+
+<p>
+
+Before you continue...
+
+<br><br>
+
+Do you think Parth loves you? 🥺❤️
+
+</p>
+
+<br>
+
+<button onclick="nextQ1()">
+Yes ❤️
+</button>
+
+<button onclick="nextQ1()">
+Maybe 🤔
+</button>
+
+<button onclick="nextQ1()">
+I Don't Know 🥺
+</button>
+
+</div>
+
+</div>
+
+<!-- QUESTION 2 -->
+
+<div class="screen" id="question2">
+
+<div class="card">
+
+<div class="title">
+One More Question ❤️
+</div>
+
+<p>
+
+Have I made mistakes? 🥺
+
+</p>
+
+<br>
+
+<button onclick="nextQ2()">
+Yes 😒
+</button>
+
+<button onclick="nextQ2()">
+Definitely 😤
+</button>
+
+</div>
+
+</div>
+
+<!-- TRUTH -->
+
+<div class="screen" id="truth">
+
+<div class="card">
+
+<div class="title">
+You're Right ❤️
+</div>
+
+<p>
+
+I made mistakes.
+
+<br><br>
+
+And that's exactly why
+I made this little website for you. ❤️
+
+</p>
+
+<br>
+
+<button onclick="showCountdown()">
+Continue ❤️
+</button>
+
+</div>
+
+</div>
+
+<!-- COUNTDOWN -->
+
+<div class="screen" id="countdown">
+
+<div class="card">
+
+<div class="title" id="countNumber">
+
+3
+
+</div>
+
+<p>
+
+Our Story Begins In...
+
+</p>
+
+</div>
+
+</div>
+
+<!-- STORY INTRO -->
+
+<div class="screen" id="intro">
+
+<div class="card">
+
+<div class="title">
+
+Aadhya ❤️
+
+</div>
+
+<p style="line-height:2;">
+
+Before my final words...
+
+I want to show you something.
+
+✨
+
+A few moments...
+
+A few memories...
+
+And a few things my heart
+has always wanted to tell you. ❤️
+
+</p>
+
+<br>
+
+<button onclick="startStory()">
+
+Show Me ❤️
+
+</button>
+
+</div>
+
+</div>
+
+<!-- SONG -->
 
 <audio id="song" loop>
 <source src="song.mp3" type="audio/mpeg">
 </audio>
 
-<div class="progress">
+<!-- PROGRESS BAR -->
+
+<div class="progress" id="progressContainer" style="display:none;">
+
 <div class="bar" id="bar"></div>
+
 </div>
 
-<div class="screen active" id="q1">
+<!-- STORY -->
+
+<div class="screen" id="story">
+
+<img
+id="photo"
+src="photo1.jpg"
+style="
+width:90%;
+max-width:420px;
+height:70vh;
+object-fit:cover;
+border-radius:25px;
+box-shadow:0 10px 40px rgba(0,0,0,.5);
+animation:zoom 6s linear forwards;
+">
+
+<div
+class="card"
+style="
+margin-top:20px;
+max-width:700px;
+">
+
+<p
+id="storyText"
+style="
+line-height:2;
+font-size:18px;
+">
+
+Loading...
+
+</p>
+
+</div>
+
+</div>  
+
+
+<!-- REASONS -->
+
+<div class="screen" id="reasons">
+
 <div class="card">
-<h1>Aadhya ❤️</h1>
-<p>Before you continue...</p><br>
-<p>Do you think Parth loves you?</p><br>
-<button onclick="nextQuestion()">Yes ❤️</button>
-<button onclick="nextQuestion()">Maybe 🤔</button>
-<button onclick="nextQuestion()">I Don't Know 🥺</button>
-</div>
+
+<div class="title">
+10 Reasons Why I Love You ❤️
 </div>
 
-<div class="screen" id="q2">
+<div style="line-height:2;">
+
+❤️ Your smile<br>
+❤️ Your kindness<br>
+❤️ Your cute anger<br>
+❤️ Your honesty<br>
+❤️ Your caring nature<br>
+❤️ Your beautiful eyes<br>
+❤️ Your laugh<br>
+❤️ Your heart<br>
+❤️ Your personality<br>
+❤️ Simply because you're Aadhya
+
+</div>
+
+<br>
+
+<button onclick="showPromise()">
+One More Thing ❤️
+</button>
+
+</div>
+
+</div>
+
+<!-- PROMISE -->
+
+<div class="screen" id="promise">
+
 <div class="card">
-<h1>One More Question ❤️</h1>
-<p>Have I made mistakes?</p><br>
-<button onclick="showTruth()">Yes 😒</button>
-<button onclick="showTruth()">Definitely 😤</button>
-</div>
-</div>
 
-<div class="screen" id="truth">
-<div class="card">
-<h1>You're Right ❤️</h1>
-<p>I made mistakes. And that's why I made this for you ❤️</p><br>
-<button onclick="startJourney()">Show Me ❤️</button>
+<div class="title">
+My Promise ❤️
 </div>
-</div>
-
-<div class="story" id="story">
-<img id="photo" src="photo1.jpg">
-<div class="message" id="text"></div>
-</div>
-
-<div class="screen" id="final">
-
-<div class="card">
-
-<h1>Aadhyaaa Malkin ❤️</h1>
 
 <p style="line-height:2;">
 
-I know trust isn't built by words alone.<br><br>
+✓ To listen better ❤️<br>
 
-I care about you.<br>
-I appreciate you.<br>
-I respect you.<br><br>
+✓ To understand your feelings ❤️<br>
 
-Thank you for every smile.<br>
-Thank you for every memory.<br><br>
+✓ To respect your emotions ❤️<br>
 
-I Love You My Sweetheart ❤️<br><br>
+✓ To be patient ❤️<br>
 
-My Babyyyyyyyyyyyyy 🙈🤧❤️🫰💫🔮💓💋<br><br>
+✓ To keep choosing you ❤️
+
+</p>
+
+<br>
+
+<button onclick="showLetter()">
+Read My Heart ❤️
+</button>
+
+</div>
+
+</div>
+
+<!-- LOVE LETTER -->
+
+<div class="screen" id="letter">
+
+<div class="card">
+
+<div class="title">
+Dear Aadhya ❤️
+</div>
+
+<p style="line-height:2;">
+
+Maybe I can't erase every mistake.
+
+<br><br>
+
+Maybe I can't instantly fix every hurt.
+
+<br><br>
+
+But I can choose to become better.
+
+<br><br>
+
+Not because I have to...
+
+<br><br>
+
+Because you're worth it. ❤️
+
+<br><br>
+
+Thank you for every smile.
+
+<br>
+
+Thank you for every memory.
+
+<br>
+
+Thank you for being you. ❤️
+
+<br><br>
+
+I Love You My Sweetheart ❤️
+
+<br><br>
 
 — Parth
 
 </p>
 
-<button onclick="showEnding()">
-Do You Believe My Love Is Real? ❤️
+<br>
+
+<button onclick="showForever()">
+Forever ❤️
 </button>
 
 </div>
+
 </div>
 
-<div class="screen" id="ending">
+<!-- FOREVER -->
+
+<div class="screen" id="forever">
 
 <div class="card">
 
-<h1>Forever Yours ❤️</h1>
+<div class="title">
+Forever Yours ❤️
+</div>
 
-<p style="line-height:2;font-size:1.2rem;">
+<p style="line-height:2;">
 
-Thank you for listening to my heart ❤️
-
-<br><br>
-
-No matter what happens,
-you will always be special to me ❤️
+Aadhyaaa Malkin ❤️
 
 <br><br>
 
-Aadhyaaa Malkin 🙈🤧❤️🫰💫🔮💓💋
-
-<br><br>
-
-Before you go... ❤️
-
-<br><br>
-
-I have one final gift waiting for you 🎁
+No matter what happens...
 
 <br>
 
-A small surprise made especially for
-my favorite person in the world 🥺❤️
+You will always be special to me ❤️
+
+<br><br>
+
+My Babyyyyyyyyyyyyy 🙈🤧❤️🫰💫🔮💓💋
 
 </p>
 
@@ -250,14 +872,12 @@ href="https://digibouquet.net/create-bouquet?b=JTdCJTIyZiUyMiUzQSU1QiUyMnBlb255J
 target="_blank"
 style="
 display:inline-block;
-padding:16px 30px;
+padding:15px 25px;
 background:white;
 color:#ff4f81;
-text-decoration:none;
 border-radius:50px;
-font-weight:700;
-font-size:18px;
-box-shadow:0 5px 20px rgba(0,0,0,.3);
+text-decoration:none;
+font-weight:bold;
 ">
 
 🌹 Open Your Surprise ❤️
@@ -266,87 +886,49 @@ box-shadow:0 5px 20px rgba(0,0,0,.3);
 
 </div>
 
-</div>
+</div>  
 
 <script>
+function showReasons(){
 
-const photos=[
-"photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg",
-"photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg","photo10.jpg",
-"photo11.jpg","photo12.jpg","photo13.jpg","photo14.jpg","photo15.jpg"
-];
+document.getElementById("story")
+.classList.remove("active");
 
-const messages=[
-"From this little Malkin 👶❤️ to the beautiful girl you are today...",
-"This smile became one of my favorite things in the world ✨",
-"Every memory with you became a memory worth keeping 🤍",
-"You deserve patience, respect and care ❤️",
-"Your happiness means more to me than you know 🌙",
-"Even your cute anger is special to me 🙈",
-"Sometimes I catch myself smiling because I remembered you ❤️",
-"No matter how busy my day gets, thoughts of you always find their way back to me ✨",
-"You have a way of making ordinary moments feel special 🌹",
-"Your smile can brighten even the darkest day ☀️❤️",
-"Some people leave memories, you leave feelings forever 💫",
-"If I could keep one thing forever, it would be your smile 🥺❤️",
-"You are incredibly precious to me 🤍",
-"My favorite story will always be the one that includes you ❤️",
-"If I had a thousand chances, I'd still choose you ❤️"
-];
-
-let current=0;
-
-function nextQuestion(){
-document.getElementById('q1').classList.remove('active');
-document.getElementById('q2').classList.add('active');
-}
-
-function showTruth(){
-document.getElementById('q2').classList.remove('active');
-document.getElementById('truth').classList.add('active');
-}
-
-function startJourney(){
-
-document.getElementById('truth').classList.remove('active');
-document.getElementById('story').classList.add('active');
-
-document.getElementById('song').play().catch(()=>{});
-
-document.getElementById('text').innerHTML=messages[0];
-
-const slideshow=setInterval(()=>{
-
-current++;
-
-if(current>=photos.length){
-
-clearInterval(slideshow);
-
-document.getElementById('story').classList.remove('active');
-
-document.getElementById('final').classList.add('active');
-
-return;
-}
-
-document.getElementById('photo').src=photos[current];
-document.getElementById('text').innerHTML=messages[current];
-
-document.getElementById('bar').style.width=
-((current+1)/photos.length)*100+"%";
-
-},6000);
+document.getElementById("reasons")
+.classList.add("active");
 
 }
 
-function showEnding(){
-document.getElementById('final').classList.remove('active');
-document.getElementById('ending').classList.add('active');
+function showPromise(){
+
+document.getElementById("reasons")
+.classList.remove("active");
+
+document.getElementById("promise")
+.classList.add("active");
+
 }
 
+function showLetter(){
+
+document.getElementById("promise")
+.classList.remove("active");
+
+document.getElementById("letter")
+.classList.add("active");
+
+}
+
+function showForever(){
+
+document.getElementById("letter")
+.classList.remove("active");
+
+document.getElementById("forever")
+.classList.add("active");
+
+}
+  
 </script>
-
 </body>
 </html>
-
