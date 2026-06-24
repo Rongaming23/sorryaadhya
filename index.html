@@ -221,6 +221,15 @@ placeholder="Write customer concern here...">
 
 </div>
 
+<label>Agent Profile</label>
+<select id="agentSelect" onchange="renderHistory(); updateStats();">
+<option value="Parth">Parth</option>
+<option value="Riya">Riya</option>
+<option value="Biswajit">Biswajit</option>
+<option value="Soumili">Soumili</option>
+<option value="Sayonika">Sayonika</option>
+</select>
+  
 <label>Customer Concern</label>
 
 <label>Issue Type</label>
@@ -285,6 +294,11 @@ Recent Cases
 
 <script>
 
+function getAgentKey(){
+  let agent = document.getElementById("agentSelect")?.value || "parth";
+  return "caseHistory_" + agent;
+}
+  
 function generateCase(){
 
 let note =
@@ -293,8 +307,7 @@ Phone Number : ${document.getElementById("phone").value}
 Order ID : ${document.getElementById("orderId").value}
 Order Place : ${document.getElementById("orderPlace").value}
 Outlet : ${document.getElementById("outlet").value}
-Issue Type :
-${document.getElementById("issueType").value} ${document.getElementById("customerConcern").value}`;
+Issue Type - ${document.getElementById("issueType").value} : ${document.getElementById("customerConcern").value}`;
 
 document.getElementById("output").innerText = note;
 
@@ -315,14 +328,15 @@ function clearForm(){
 document.querySelectorAll("input, textarea")
 .forEach(e=>e.value="");
 
-output.innerText=
+document.getElementById("output").innerText =
 "Generated case note will appear here...";
 }
-
+  
 function saveHistory(){
 
-let history =
-JSON.parse(localStorage.getItem("caseHistory") || "[]");
+let key = getAgentKey();
+
+let history = JSON.parse(localStorage.getItem(key) || "[]");
 
 history.unshift({
 name: document.getElementById("name").value,
@@ -334,7 +348,7 @@ date: new Date().toLocaleString()
 
 history = history.slice(0,50);
 
-localStorage.setItem("caseHistory", JSON.stringify(history));
+localStorage.setItem(key, JSON.stringify(history));
 
 renderHistory();
 updateStats();
@@ -346,12 +360,13 @@ updateStats();
 
 function renderHistory(){
 
-let history = JSON.parse(localStorage.getItem("caseHistory") || "[]");
+let key = getAgentKey();
+
+let history = JSON.parse(localStorage.getItem(key) || "[]");
 
 let searchBox = document.getElementById("searchBox");
 let searchValue = searchBox ? searchBox.value.toLowerCase().trim() : "";
 
-// 🔍 SAFE FILTER (prevents crash if order is undefined)
 if(searchValue){
 history = history.filter(item =>
 (item.order || "").toLowerCase().includes(searchValue)
@@ -360,19 +375,11 @@ history = history.filter(item =>
 
 let container = document.getElementById("history");
 
-// ❗ HARD CHECK (prevents silent failure)
-if(!container){
-console.error("ERROR: history div not found");
-return;
-}
-
-// empty state
 if(history.length === 0){
 container.innerHTML = `<div style="color:#aaa;">No recent cases found</div>`;
 return;
 }
 
-// highlight function
 function highlight(text){
 if(!searchValue) return text || "";
 return (text || "").replaceAll(
@@ -383,16 +390,15 @@ searchValue,
 
 container.innerHTML = "";
 
-// build UI
 history.forEach((item, index) => {
 
 container.innerHTML += `
 <div class="history-item">
 
-Name:</b> ${item.name || ""}<br>
-Order:</b> ${item.order || ""}<br>
-Concern:<b> ${item.concern || ""}<br>
-Issue:</b> ${item.issue || ""}<br>
+<b>Name:</b> ${item.name || ""}<br>
+<b>Order:</b> ${item.order || ""}<br>
+<b>Concern:</b> ${item.concern || ""}<br>
+<b>Issue:</b> ${item.issue || ""}<br>
 <small>${item.date || ""}</small>
 
 <br><br>
@@ -403,7 +409,7 @@ Delete
 
 </div>
 `;
-
+  
 });
 
 }
@@ -414,7 +420,9 @@ Delete
 
 function deleteCase(index){
 
-let history = JSON.parse(localStorage.getItem("caseHistory") || "[]");
+let key = getAgentKey();
+
+let history = JSON.parse(localStorage.getItem(key) || "[]");
 
 let searchValue = document.getElementById("searchBox")?.value.toLowerCase().trim();
 
@@ -435,11 +443,12 @@ x.date === realItem.date
 
 history.splice(index,1);
 
-localStorage.setItem("caseHistory", JSON.stringify(history));
+localStorage.setItem(key, JSON.stringify(history));
 
 renderHistory();
 updateStats();
 }
+  
 
 /* =========================
    📊 STATS (SAFE VERSION)
@@ -447,7 +456,9 @@ updateStats();
 
 function updateStats(){
 
-let history = JSON.parse(localStorage.getItem("caseHistory") || "[]");
+let key = getAgentKey();
+
+let history = JSON.parse(localStorage.getItem(key) || "[]");
 
 document.getElementById("totalCases").innerText = history.length;
 
