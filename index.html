@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Aadhya ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;document.getElementById('story').classList.remove('active');
+
+document.getElementById('videoScreen').classList.add('active');
+
+const video=document.getElementById('loveVideo');
+
+video.play().catch(()=>{});
+
+video.onended=function(){
+
+document.getElementById('videoScreen').classList.remove('active');
+
+document.getElementById('final').classList.add('active');
+
+};
+
+return;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#1e293b);
+height:100vh;
+overflow:hidden;
+color:white;
+}
+
+.screen,.story{
+position:absolute;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:20px;
+text-align:center;
+animation:fade 1s;
+}
+
+.active{
+display:flex;
+}
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+.card{
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(15px);
+padding:25px;
+border-radius:25px;
+max-width:850px;
+width:90%;
+}
+
+h1{
+font-family:'Dancing Script',cursive;
+font-size:3rem;
+margin-bottom:15px;
+}
+
+button{
+margin:10px;
+padding:14px 28px;
+border:none;
+border-radius:50px;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+background:white;
+color:#ff4f81;
+}
+
+.story img{
+width:90%;
+max-width:380px;
+height:70vh;
+object-fit:cover;
+border-radius:25px;
+box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+
+.message{
+margin-top:20px;
+background:rgba(255,255,255,.12);
+padding:20px;
+border-radius:20px;
+max-width:700px;
+line-height:1.8;
+}
+
+.progress{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:4px;
+background:rgba(255,255,255,.2);
+z-index:999;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:white;
+transition:width 6s linear;
+}
+
+video{
+width:100%;
+max-width:420px;
+border-radius:25px;
+}
+
+audio{
+display:none;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="song" loop>
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div class="screen active" id="q1">
+<div class="card">
+<h1>Aadhya ❤️</h1>
+<p>Before you continue...</p><br>
+<p>Do you think Parth loves you?</p><br>
+<button onclick="nextQuestion()">Yes ❤️</button>
+<button onclick="nextQuestion()">Maybe 🤔</button>
+<button onclick="nextQuestion()">I Don't Know 🥺</button>
+</div>
+</div>
+
+<div class="screen" id="q2">
+<div class="card">
+<h1>One More Question ❤️</h1>
+<p>Have I made mistakes?</p><br>
+<button onclick="showTruth()">Yes 😒</button>
+<button onclick="showTruth()">Definitely 😤</button>
+</div>
+</div>
+
+<div class="screen" id="truth">
+<div class="card">
+<h1>You're Right ❤️</h1>
+<p>I made mistakes. And that's why I made this for you ❤️</p><br>
+<button onclick="startJourney()">Show Me ❤️</button>
+</div>
+</div>
+
+<div class="story" id="story">
+<img id="photo" src="photo1.jpg">
+<div class="message" id="text"></div>
+</div>
+
+<div class="screen" id="final">
+
+<div class="card">
+
+<h1>Aadhyaaa Malkin ❤️</h1>
+
+<p style="line-height:2;">
+
+I know trust isn't built by words alone.<br><br>
+
+I care about you.<br>
+I appreciate you.<br>
+I respect you.<br><br>
+
+Thank you for every smile.<br>
+Thank you for every memory.<br><br>
+
+I Love You My Sweetheart ❤️<br><br>
+
+My Babyyyyyyyyyyyyy 🙈🤧❤️🫰💫🔮💓💋<br><br>
+
+— Parth
+
+</p>
+
+<button onclick="showEnding()">
+Do You Believe My Love Is Real? ❤️
+</button>
+
+</div>
+</div>
+
+<div class="screen" id="ending">
+<div class="card">
+<h1>Forever Yours ❤️</h1>
+<p>
+Thank you for listening to my heart ❤️
+<br><br>
+Aadhyaaa Malkin 🙈🤧❤️🫰💫🔮💓💋
+</p>
+</div>
+</div>
+
+<script>
+
+const photos=[
+"photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg",
+"photo6.jpg","photo7.jpg","photo8.jpg","photo9.jpg","photo10.jpg",
+"photo11.jpg","photo12.jpg","photo13.jpg","photo14.jpg","photo15.jpg"
+];
+
+const messages=[
+"From this little Malkin 👶❤️ to the beautiful girl you are today...",
+"This smile became one of my favorite things in the world ✨",
+"Every memory with you became a memory worth keeping 🤍",
+"You deserve patience, respect and care ❤️",
+"Your happiness means more to me than you know 🌙",
+"Even your cute anger is special to me 🙈",
+"Sometimes I catch myself smiling because I remembered you ❤️",
+"No matter how busy my day gets, thoughts of you always find their way back to me ✨",
+"You have a way of making ordinary moments feel special 🌹",
+"Your smile can brighten even the darkest day ☀️❤️",
+"Some people leave memories, you leave feelings forever 💫",
+"If I could keep one thing forever, it would be your smile 🥺❤️",
+"You are incredibly precious to me 🤍",
+"My favorite story will always be the one that includes you ❤️",
+"If I had a thousand chances, I'd still choose you ❤️"
+];
+
+let current=0;
+
+function nextQuestion(){
+document.getElementById('q1').classList.remove('active');
+document.getElementById('q2').classList.add('active');
+}
+
+function showTruth(){
+document.getElementById('q2').classList.remove('active');
+document.getElementById('truth').classList.add('active');
+}
+
+function startJourney(){
+
+document.getElementById('truth').classList.remove('active');
+document.getElementById('story').classList.add('active');
+
+document.getElementById('song').play().catch(()=>{});
+
+document.getElementById('text').innerHTML=messages[0];
+
+const slideshow=setInterval(()=>{
+
+current++;
+
+if(current>=photos.length){
+
+clearInterval(slideshow);
+
+document.getElementById('story').classList.remove('active');
+
+document.getElementById('final').classList.add('active');
+
+return;
+}
+
+document.getElementById('photo').src=photos[current];
+document.getElementById('text').innerHTML=messages[current];
+
+document.getElementById('bar').style.width=
+((current+1)/photos.length)*100+"%";
+
+},6000);
+
+}
+
+function showEnding(){
+document.getElementById('final').classList.remove('active');
+document.getElementById('ending').classList.add('active');
+}
+
+</script>
+
+</body>
+</html>
+
