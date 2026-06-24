@@ -354,10 +354,6 @@ renderHistory();
 updateStats();
 }
 
-/* =========================
-   🚀 UPGRADED HISTORY SYSTEM
-========================= */
-
 function renderHistory(){
 
 let key = getAgentKey();
@@ -373,7 +369,7 @@ history = history.filter(item =>
 );
 }
 
-let container = document.getElementById("history");
+le container = document.getElementById("history");
 
 if(history.length === 0){
 container.innerHTML = `<div style="color:#aaa;">No recent cases found</div>`;
@@ -413,10 +409,6 @@ Delete
 });
 
 }
-  
-/* =========================
-   🚀 SAFE DELETE (SEARCH SAFE)
-========================= */
 
 function deleteCase(index){
 
@@ -449,11 +441,6 @@ renderHistory();
 updateStats();
 }
   
-
-/* =========================
-   📊 STATS (SAFE VERSION)
-========================= */
-
 function updateStats(){
 
 let key = getAgentKey();
@@ -478,3 +465,4 @@ renderHistory();
 updateStats();
 
 </script>
+/* Made by Parth© */
