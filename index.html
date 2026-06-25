@@ -252,6 +252,20 @@ placeholder="Write customer concern here...">
 <option>Instruction</option>
 </select>
 
+
+<label>Delivery Partner</label>
+
+<select id="deliveryPartner">
+<option value="">Select Partner</option>
+<option>Swiggy</option>
+<option>Zomato</option>
+<option>Toing</option>
+<option>Magicpin</option>
+<option>WowEats</option>
+<option>Direct Outlet</option>
+</select>
+
+
 <button class="primary" onclick="generateCase()">
 Generate Case
 </button>
@@ -347,7 +361,8 @@ name: document.getElementById("name").value,
 order: document.getElementById("orderId").value,
 concern: document.getElementById("customerConcern").value,
 issue: document.getElementById("issueType").value,
-agent: agent,   // ✅ ADD THIS LINE
+deliveryPartner: document.getElementById("deliveryPartner").value,
+agent: agent,   // 
 date: new Date().toLocaleString()
 });
 
@@ -399,6 +414,7 @@ container.innerHTML += `
 <b>Name:</b> ${item.name || ""}<br>
 <b>Order:</b> ${item.order || ""}<br>
 <b>Concern:</b> ${item.concern || ""}<br>
+<b>Delivery Partner:</b> ${item.deliveryPartner || "N/A"}<br>
 <b>Issue:</b> ${item.issue || ""}<br>
 <small>${item.date || ""}</small>
 <br>
@@ -481,7 +497,7 @@ alert("No history to download!");
 return;
 }
 
-let csv = "\Name,Order,Concern,Issue,Agent,Date\n";
+let csv = "\uFEFFName,Order,Concern,Issue,Delivery Partner,Agent,Date\n";
 
 history.forEach(item => {
 
@@ -490,6 +506,7 @@ item.name || "",
 item.order || "",
 item.concern || "",
 item.issue || "",
+item.deliveryPartner || "",
 item.agent || "",
 item.date || ""
 ]
