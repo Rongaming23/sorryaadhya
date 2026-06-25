@@ -340,10 +340,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
   
 
-function getAgentKey(){
-  let agent = document.getElementById("agentSelect")?.value || "parth";
-  return "caseHistory_" + agent;
-}
+
   
 function generateCase(){
 
@@ -403,20 +400,44 @@ alert("Error Saving Case");
 }
 
 }
-  
-history = history.slice(0,2000);
 
-await addDoc(collection(db,"cases"),{
-name:name,
-phone:phone,
-orderId:orderId,
-outlet:outlet,
-issue:issue,
-concern:concern,
-deliveryPartner:deliveryPartner,
-agent:agent,
-createdAt:new Date()
+function updateStats(){
+
+onSnapshot(collection(db,"cases"),(snapshot)=>{
+
+let total = 0;
+let refund = 0;
+let complaint = 0;
+let escalation = 0;
+
+snapshot.forEach((docSnap)=>{
+
+const item = docSnap.data();
+
+total++;
+
+if(item.issue==="Refund Request")
+refund++;
+
+if((item.issue || "").includes("Complaint"))
+complaint++;
+
+if(
+(item.issue || "").includes("Complaint") ||
+(item.issue || "").includes("Refund Request")
+)
+escalation++;
+
 });
+
+document.getElementById("totalCases").innerText = total;
+document.getElementById("refundCases").innerText = refund;
+document.getElementById("complaintCases").innerText = complaint;
+document.getElementById("escalationCases").innerText = escalation;
+
+});
+
+}
 
 renderHistory();
 updateStats();
@@ -490,11 +511,6 @@ container.innerHTML += `
 style="color:#3b82f6;font-weight:200;">
 ${item.agent || "Unknown"}
 </span><br>
-
-<button class="danger" onclick="deleteCase(${index})">
-Delete
-</button>
-
 </div>
 `;
   
@@ -502,28 +518,6 @@ Delete
 
 }
 
-function deleteCase(index){
-
-let key = getAgentKey();
-
-let history = JSON.parse(localStorage.getItem(key) || "[]");
-
-let searchValue = document.getElementById("searchBox")?.value.toLowerCase().trim();
-
-if(searchValue){
-
-let filtered = history.filter(item =>
-(item.order || "").toLowerCase().includes(searchValue)
-);
-
-let realItem = filtered[index];
-
-index = history.findIndex(x =>
-x.order === realItem.order &&
-x.date === realItem.date
-);
-
-}
 
 history.splice(index,1);
 
@@ -533,93 +527,28 @@ renderHistory();
 updateStats();
 }
   
-function updateStats(){
 
-let key = getAgentKey();
-
-let history = JSON.parse(localStorage.getItem(key) || "[]");
-
-document.getElementById("totalCases").innerText = history.length;
-
-document.getElementById("refundCases").innerText =
-history.filter(x => (x.issue || "").includes("Refund Request")).length;
-
-document.getElementById("complaintCases").innerText =
-history.filter(x => (x.issue || "").includes("Complaint")).length;
-
-document.getElementById("escalationCases").innerText =
-history.filter(x =>
-(x.issue || "").includes("Complaint") ||
-(x.issue || "").includes("Refund Request") ||
-(x.issue || "").includes("Outlet Complaint")
-).length;
-}
-
-function downloadCSV(){
-
-let key = getAgentKey();
-  
 async function downloadCSV(){
 
-const snapshot =
-await getDocs(collection(db,"cases"));
+const snapshot = await getDocs(collection(db,"cases"));
 
 let csv =
 "Name,Order,Concern,Issue,Partner,Agent,Date\n";
 
-snapshot.forEach(doc=>{
+snapshot.forEach((docSnap)=>{
 
-const item = doc.data();
+const item = docSnap.data();
 
-csv += `"${item.name}","${item.order}","${item.concern}","${item.issue}","${item.deliveryPartner}","${item.agent}","${item.date}"\n`;
+csv += `"${item.name || ""}","${item.order || ""}","${item.concern || ""}","${item.issue || ""}","${item.deliveryPartner || ""}","${item.agent || ""}","${item.date || ""}"\n`;
 
 });
 
-const blob =
-new Blob([csv],{
-type:"text/csv"
+const blob = new Blob([csv],{
+type:"text/csv;charset=utf-8;"
 });
 
-const link =
-document.createElement("a");
+const link = document.createElement("a");
 
-link.href =
-URL.createObjectURL(blob);
-
-link.download =
-"case_history.csv";
-
-link.click();
-
-}
-
-if(!history.length){
-alert("No history to download!");
-return;
-}
-
-let csv = "\Name , Order ID , Concern , Issue , Delivery Partner , Agent , Date\n";
-
-history.forEach(item => {
-
-let row = [
-item.name || "",
-item.order || "",
-item.concern || "",
-item.issue || "",
-item.deliveryPartner || "",
-item.agent || "",
-item.date || ""
-]
-.map(v => `"${String(v).replace(/"/g,'""')}"`)
-.join(",");
-
-csv += row + "\n";
-});
-
-let blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-
-let link = document.createElement("a");
 link.href = URL.createObjectURL(blob);
 link.download = "case_history.csv";
 
@@ -627,10 +556,7 @@ document.body.appendChild(link);
 link.click();
 document.body.removeChild(link);
 
-setTimeout(() => {
-URL.revokeObjectURL(link.href);
-}, 1000);
-
+}
                                          }
 
 /* INIT */
@@ -669,6 +595,11 @@ let url = "https://wa.me/?text=" + encodeURIComponent(message);
 window.open(url, "_blank");
 }
 
+window.generateCase = generateCase;
+window.copyCase = copyCase;
+window.clearForm = clearForm;
+window.downloadCSV = downloadCSV;
+window.sendCaseToWhatsApp = sendCaseToWhatsApp;
   
 </script>
 
