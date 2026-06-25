@@ -264,6 +264,10 @@ Copy
 Clear
 </button>
 
+<button class="success" onclick="downloadCSV()">
+Download CSV
+</button>
+
 </div>
 
 <div class="card">
@@ -432,6 +436,34 @@ x.date === realItem.date
 
 }
 
+function downloadCSV(){
+
+let key = getAgentKey();
+let history = JSON.parse(localStorage.getItem(key) || "[]");
+
+if(history.length === 0){
+alert("No history to download!");
+return;
+}
+
+let csv = "Name,Order,Concern,Issue,Date\n";
+
+history.forEach(item => {
+csv += `"${item.name}","${item.order}","${item.concern}","${item.issue}","${item.date}"\n`;
+});
+
+let blob = new Blob([csv], { type: "text/csv" });
+let url = URL.createObjectURL(blob);
+
+let a = document.createElement("a");
+a.href = url;
+a.download = "case_history.csv";
+a.click();
+
+URL.revokeObjectURL(url);
+}
+
+  
 history.splice(index,1);
 
 localStorage.setItem(key, JSON.stringify(history));
