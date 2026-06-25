@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Agent CRM Dashboard</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>🎫 CRM</h2>
+
+<a href="agent.html">Dashboard</a>
+<a href="#" onclick="logout()">Logout</a>
+
+</div>
+
+<div class="main-content">
+
+<h1>Agent Dashboard</h1>
+
+<br>
+
+<div class="stats">
+
+<div class="stat-card">
+<div>Total Cases</div>
+<h2 id="totalCases">0</h2>
+</div>
+
+<div class="stat-card">
+<div>Open Cases</div>
+<h2 id="openCases">0</h2>
+</div>
+
+<div class="stat-card">
+<div>Resolved Cases</div>
+<h2 id="resolvedCases">0</h2>
+</div>
+
+<div class="stat-card">
+<div>Escalated Cases</div>
+<h2 id="escalatedCases">0</h2>
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Create New Case</h2>
+
+<br>
+
+<input
+id="customerName"
+placeholder="Customer Name"
+>
+
+<input
+id="phone"
+placeholder="Phone Number"
+>
+
+<input
+id="orderId"
+placeholder="Order ID"
+>
+
+<input
+type="date"
+id="orderDate"
+>
+
+<input
+id="outlet"
+placeholder="Outlet"
+>
+
+<select id="deliveryPartner">
+
+<option>Swiggy</option>
+<option>Zomato</option>
+<option>Magicpin</option>
+<option>Toing</option>
+<option>Wow Eats</option>
+
+</select>
+
+<select id="issueType">
+
+<option>Missing Item</option>
+<option>Wrong Order</option>
+<option>Refund Request</option>
+<option>Complaint</option>
+<option>Food Quality Issue</option>
+<option>Packaging Issue</option>
+
+</select>
+
+<select id="status">
+
+<option>Open</option>
+<option>In Progress</option>
+<option>Escalated</option>
+<option>Resolved</option>
+<option>Closed</option>
+
+</select>
+
+<textarea
+id="customerConcern"
+placeholder="Customer Concern"
+></textarea>
+
+<button
+class="primary"
+onclick="saveCase()"
+>
+Save Case
+</button>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Recent Cases</h2>
+
+<br>
+
+<div id="caseList">
+
+Loading Cases...
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module" src="js/crm.js"></script>
+
+</body>
+</html>

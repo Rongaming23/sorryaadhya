@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Uniserve CRM Dashboard</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>🎫 Uniserve CRM</h2>
+
+<a href="agent.html">Agent Panel</a>
+
+<a href="admin.html">Admin Panel</a>
+
+<a href="login.html">Login</a>
+
+</div>
+
+<div class="main-content">
+
+<h1>
+Welcome to Uniserve CRM v4
+</h1>
+
+<br>
+
+<div class="stats">
+
+<div class="stat-card">
+<div>Cloud CRM</div>
+<h2>☁️</h2>
+</div>
+
+<div class="stat-card">
+<div>Multi Agent</div>
+<h2>👨‍💼</h2>
+</div>
+
+<div class="stat-card">
+<div>Real Time</div>
+<h2>⚡</h2>
+</div>
+
+<div class="stat-card">
+<div>Reports</div>
+<h2>📊</h2>
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>CRM Features</h2>
+
+<br>
+
+<ul style="line-height:2;">
+
+<li>Firebase Authentication</li>
+
+<li>Admin Login</li>
+
+<li>Agent Login</li>
+
+<li>Realtime Firestore Database</li>
+
+<li>Ticket Management</li>
+
+<li>Delivery Partner Tracking</li>
+
+<li>Status Workflow</li>
+
+<li>Cloud Storage</li>
+
+<li>CSV Export</li>
+
+<li>Agent Performance Reports</li>
+
+</ul>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Reports Center</h2>
+
+<br>
+
+<button
+class="success"
+onclick="exportCSV()"
+>
+Export CSV
+</button>
+
+<button
+class="primary"
+onclick="agentPerformance()"
+>
+Agent Performance
+</button>
+
+<br><br>
+
+<div id="reportArea">
+
+Report data will appear here.
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module" src="js/reports.js"></script>
+
+</body>
+</html>
