@@ -403,7 +403,7 @@ container.innerHTML += `
 <small>${item.date || ""}</small>
 <br>
 <b>Handled By:</b> <span 
-style="color:#3b82f6;font-weight:600;">
+style="color:#3b82f6;font-weight:300;">
 ${item.agent || "Unknown"}
 </span><br>
 
@@ -481,7 +481,7 @@ alert("No history to download!");
 return;
 }
 
-let csv = "Name,Order,Concern,Issue,Date\n";
+let csv = "Name,Order,Concern,Issue,Date,Agent\n";
 
 history.forEach(item => {
 
@@ -490,7 +490,8 @@ item.name || "",
 item.order || "",
 item.concern || "",
 item.issue || "",
-item.date || ""
+item.date || "",
+item.agent || ""
 ]
 .map(v => `"${String(v).replace(/"/g,'""')}"`)
 .join(",");
