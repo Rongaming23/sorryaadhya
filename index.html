@@ -436,34 +436,6 @@ x.date === realItem.date
 
 }
 
-function downloadCSV(){
-
-let key = getAgentKey();
-let history = JSON.parse(localStorage.getItem(key) || "[]");
-
-if(history.length === 0){
-alert("No history to download!");
-return;
-}
-
-let csv = "Name,Order,Concern,Issue,Date\n";
-
-history.forEach(item => {
-csv += `"${item.name}","${item.order}","${item.concern}","${item.issue}","${item.date}"\n`;
-});
-
-let blob = new Blob([csv], { type: "text/csv" });
-let url = URL.createObjectURL(blob);
-
-let a = document.createElement("a");
-a.href = url;
-a.download = "case_history.csv";
-a.click();
-
-URL.revokeObjectURL(url);
-}
-
-  
 history.splice(index,1);
 
 localStorage.setItem(key, JSON.stringify(history));
@@ -487,8 +459,52 @@ document.getElementById("complaintCases").innerText =
 history.filter(x => (x.issue || "").includes("Complaint")).length;
 
 document.getElementById("escalationCases").innerText =
-history.filter(x => (x.issue || "").includes("Business Query")).length;
+history.filter(x =>
+(x.issue || "").includes("Complaint") ||
+(x.issue || "").includes("Refund Request") ||
+(x.issue || "").includes("Outlet Complaint")
+).length;
 }
+
+function downloadCSV(){
+
+let key = getAgentKey();
+let history = JSON.parse(localStorage.getItem(key) || "[]");
+
+if(!history.length){
+alert("No history to download!");
+return;
+}
+
+let csv = "\uFEFFName,Order,Concern,Issue,Date\n";
+
+history.forEach(item => {
+
+let row = [
+item.name || "",
+item.order || "",
+item.concern || "",
+item.issue || "",
+item.date || ""
+]
+.map(v => `"${String(v).replace(/"/g, '""')}"`)
+.join(",");
+
+csv += row + "\n";
+});
+
+let blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+let url = URL.createObjectURL(blob);
+
+let a = document.createElement("a");
+a.href = url;
+a.download = "case_history.csv";
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+
+URL.revokeObjectURL(url);
+  }
 
 /* INIT */
 renderHistory();
