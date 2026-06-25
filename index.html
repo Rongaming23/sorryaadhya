@@ -282,6 +282,10 @@ Clear
 Download CSV
 </button>
 
+<button class="success" onclick="sendCaseToWhatsApp()">
+Send 
+</button>
+  
 </div>
 
 <div class="card">
@@ -534,6 +538,39 @@ URL.revokeObjectURL(link.href);
 renderHistory();
 updateStats();
 
+function sendCaseToWhatsApp(){
+
+let name = document.getElementById("name").value;
+let phone = document.getElementById("phone").value;
+let orderId = document.getElementById("orderId").value;
+let date = document.getElementById("date").value;
+let outlet = document.getElementById("outlet").value;
+let issue = document.getElementById("issueType").value;
+let concern = document.getElementById("customerConcern").value;
+let delivery = document.getElementById("deliveryPartner").value;
+
+if(!name || !orderId){
+alert("Please fill required fields!");
+return;
+}
+
+let message =
+`Name: ${name}
+Phone: ${phone}
+Order ID: ${orderId}
+Order Date: ${date}
+Outlet: ${outlet}
+Issue: ${issue}
+Concern: ${concern}
+Partner: ${delivery}
+`;
+
+let url = "https://wa.me/?text=" + encodeURIComponent(message);
+
+window.open(url, "_blank");
+}
+
+  
 </script>
 
 <footer style="
