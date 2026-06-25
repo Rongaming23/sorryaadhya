@@ -1,203 +1,590 @@
-<script type="module">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wow Cx Data Dashboard Pro By Parth</title>
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+:root{
+--bg:#0f172a;
+--card:#111827;
+--card2:#1e293b;
+--accent:#3b82f6;
+--success:#22c55e;
+--danger:#ef4444;
+--text:#f8fafc;
+}
 
-import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+body{
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:var(--text);
+min-height:100vh;
+padding:20px;
+}
 
-const firebaseConfig = {
-apiKey: "AIzaSyAdR4XaDcs2M7o43j2pu6K1zA3FhCrK-cA",
-authDomain: "customerdetailsuniserve.firebaseapp.com",
-projectId: "customerdetailsuniserve",
-storageBucket: "customerdetailsuniserve.firebasestorage.app",
-messagingSenderId: "125960501611",
-appId: "1:125960501611:web:4fbbe720ce8a063afbb42e",
-measurementId: "G-YK03S135FK"
-};
+.container{
+max-width:1400px;
+margin:auto;
+}
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(15px);
+border-radius:20px;
+padding:20px;
+box-shadow:0 8px 30px rgba(0,0,0,.2);
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.stat-card{
+padding:20px;
+border-radius:16px;
+background:var(--card);
+}
+
+.stat-card h2{
+font-size:32px;
+margin-top:10px;
+}
+
+.main{
+display:grid;
+grid-template-columns:1.3fr 1fr;
+gap:20px;
+}
+
+textarea,input,select{
+width:100%;
+padding:12px;
+margin-top:5px;
+margin-bottom:15px;
+background:var(--card2);
+border:1px solid #334155;
+border-radius:10px;
+color:white;
+}
+
+textarea{
+height:180px;
+resize:none;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin-right:10px;
+margin-bottom:10px;
+font-weight:600;
+}
+
+.primary{
+background:var(--accent);
+color:white;
+}
+
+.success{
+background:var(--success);
+color:white;
+}
+
+.danger{
+background:var(--danger);
+color:white;
+}
+
+.output{
+background:var(--card2);
+padding:15px;
+border-radius:10px;
+white-space:pre-wrap;
+min-height:250px;
+}
+
+.history{
+max-height:300px;
+overflow:auto;
+margin-top:15px;
+}
+
+.history-item{
+padding:10px;
+border-bottom:1px solid #334155;
+}
+
+@media(max-width:900px){
+.main{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>🎫 Wow Cases Overview By Uniserve</h1>
+</div>
+
+<div class="stats">
+
+<div class="stat-card">
+<div>Total Cases</div>
+<h2 id="totalCases">0</h2>
+</div>
+
+<div class="stat-card">
+<div>Refund Requests</div>
+<h2 id="refundCases">0</h2>
+</div>
+
+<div class="stat-card">
+<div>Complaints</div>
+<h2 id="complaintCases">0</h2>
+</div>
+
+<div class="stat-card">
+<div>Escalations</div>
+<h2 id="escalationCases">0</h2>
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2>Customer Case</h2>
+
+<div class="row">
+
+<div>
+<label>Name</label>
+<input id="name">
+</div>
+
+<div>
+<label>Phone Number</label>
+<input id="phone">
+</div>
+
+<div>
+<label>Order ID</label>
+<input id="orderId">
+</div>
+
+<div>
+<label>Date</label>
+<input id="date">
+</div>
+
+<div>
+<label>Outlet</label>
+<input id="outlet">
+</div>
+
+<label>Customer Concern</label>
+
+<textarea
+id="customerConcern"
+placeholder="Write customer concern here...">
+</textarea>
+
+</div>
+
+<label>Agent Profile</label>
+<select id="agentSelect" onchange="renderHistory(); updateStats();">
+<option value="Parth">Parth</option>
+<option value="Riya">Riya</option>
+<option value="Biswajit">Biswajit</option>
+<option value="Soumili">Soumili</option>
+<option value="Sayonika">Sayonika</option>
+</select>
+  
+<label>Customer</label>
+
+<label>Concern</label>
+
+<select id="issueType">
+<option>Missing Item</option>
+<option>Cancel Request</option>
+<option>Wrong Order</option>
+<option>Delayed Order</option>
+<option>Veg / Non-Veg Concern</option>
+<option>Refund Request</option>
+<option>Bulk Order Query</option>
+<option>Complaint</option>
+<option>Business Query</option>
+<option>Food Quality Issue</option>
+<option>Packaging Issue</option>
+<option>Payment Issue</option>
+<option>Outlet Complaint</option>
+<option>Delivery Partner Issue</option>
+<option>Instruction</option>
+</select>
+
+
+<label>Delivery Partner</label>
+
+<select id="deliveryPartner">
+<option value="">Select Partner</option>
+<option>Swiggy</option>
+<option>Zomato</option>
+<option>Toing</option>
+<option>Magicpin</option>
+<option>WowEats</option>
+<option>Direct Outlet</option>
+</select>
+
+
+<button class="primary" onclick="generateCase()">
+Generate Case
+</button>
+
+<button class="success" onclick="copyCase()">
+Copy
+</button>
+
+<button class="danger" onclick="clearForm()">
+Clear
+</button>
+
+<button class="success" onclick="downloadCSV()">
+Download CSV
+</button>
+
+<button class="success" onclick="sendCaseToWhatsApp()">
+Send 
+</button>
+  
+</div>
+
+<div class="card">
+
+<h2>Generated Note</h2>
+
+<div id="output" class="output">
+Generated case note will appear here...
+</div>
+
+<h2 style="margin-top:20px;">
+Recent Cases
+</h2>
+  
+<input
+  type="text"
+  id="searchBox"
+  placeholder="Search by Order ID..."
+  onkeyup="renderHistory()"
+  style="width:100%; padding:10px; margin-top:10px; border-radius:10px;"
+>
+  
+<div id="history" class="history"></div>
+
+</div>
+
+</div>
+
+<script>
+
+function getAgentKey(){
+  let agent = document.getElementById("agentSelect")?.value || "parth";
+  return "caseHistory_" + agent;
+}
   
 function generateCase(){
 
-let note = `Name : ${name.value}
-Phone Number : ${phone.value}
-Order ID : ${orderId.value}
-Date : ${date.value}
-Outlet : ${outlet.value}
-Concern : ${issueType.value}
-Customer Concern : ${customerConcern.value}
-Partner : ${deliveryPartner.value}`;
-
-output.innerText = note;
+let note =
+`Name : ${document.getElementById("name").value}
+Phone Number : ${document.getElementById("phone").value}
+Order ID : ${document.getElementById("orderId").value}
+Date : ${document.getElementById("date").value}
+Outlet : ${document.getElementById("outlet").value}
+Concern : ${document.getElementById("issueType").value} - ${document.getElementById("customerConcern").value}
+Partner : ${document.getElementById("deliveryPartner").value}`;
+document.getElementById("output").innerText = note;
 
 saveHistory();
-
-} 
-
-async function saveHistory(){
-
-await addDoc(collection(db,"cases"),{
-
-name:name.value,
-phone:phone.value,
-order:orderId.value,
-outlet:outlet.value,
-issue:issueType.value,
-concern:customerConcern.value,
-partner:deliveryPartner.value,
-agent:agentSelect.value,
-date:new Date().toLocaleString()
-
-});
-
-}
-
-function renderHistory(){
-
-onSnapshot(collection(db,"cases"),(snapshot)=>{
-
-history.innerHTML="";
-
-snapshot.forEach((doc)=>{
-
-const item = doc.data();
-
-history.innerHTML += `
-<div class="history-item">
-
-<b>Name:</b> ${item.name}<br>
-<b>Order:</b> ${item.order}<br>
-<b>Issue:</b> ${item.issue}<br>
-<b>Concern:</b> ${item.concern}<br>
-<b>Partner:</b> ${item.partner}<br>
-<b>Agent:</b> ${item.agent}<br>
-<small>${item.date}</small>
-
-</div>
-`;
-
-});
-
-});
-
-}
-
-function updateStats(){
-
-onSnapshot(collection(db,"cases"),(snapshot)=>{
-
-let total=0;
-let refund=0;
-let complaint=0;
-let escalation=0;
-
-snapshot.forEach((doc)=>{
-
-const item=doc.data();
-
-total++;
-
-if(item.issue==="Refund Request")
-refund++;
-
-if(item.issue.includes("Complaint"))
-complaint++;
-
-if(
-item.issue.includes("Complaint") ||
-item.issue==="Refund Request"
-)
-escalation++;
-
-});
-
-totalCases.innerText=total;
-refundCases.innerText=refund;
-complaintCases.innerText=complaint;
-escalationCases.innerText=escalation;
-
-});
-
-}
-
-async function downloadCSV(){
-
-const snapshot =
-await getDocs(collection(db,"cases"));
-
-let csv =
-"Name,Order,Issue,Concern,Partner,Agent,Date\n";
-
-snapshot.forEach((doc)=>{
-
-const d = doc.data();
-
-csv += `"${d.name}","${d.order}","${d.issue}","${d.concern}","${d.partner}","${d.agent}","${d.date}"\n`;
-
-});
-
-const blob =
-new Blob([csv],{
-type:"text/csv"
-});
-
-const link =
-document.createElement("a");
-
-link.href =
-URL.createObjectURL(blob);
-
-link.download =
-"case_history.csv";
-
-link.click();
-
 }
 
 async function copyCase(){
 
-await navigator.clipboard.writeText(
-output.innerText
+let text = document.getElementById("output").innerText;
+
+await navigator.clipboard.writeText(text);
+}
+  
+function clearForm(){
+document.querySelectorAll("input, textarea")
+.forEach(e => e.value = "");
+
+document.getElementById("output").innerText =
+"Generated case note will appear here...";
+  }
+  
+function saveHistory(){
+
+let key = getAgentKey();
+let agent = document.getElementById("agentSelect").value;
+
+let history = JSON.parse(localStorage.getItem(key) || "[]");
+
+history.unshift({
+name: document.getElementById("name").value,
+order: document.getElementById("orderId").value,
+concern: document.getElementById("customerConcern").value,
+issue: document.getElementById("issueType").value,
+deliveryPartner: document.getElementById("deliveryPartner").value,
+agent: agent,   // 
+date: new Date().toLocaleString()
+});
+
+history = history.slice(0,2000);
+
+localStorage.setItem(key, JSON.stringify(history));
+
+renderHistory();
+updateStats();
+}
+
+function renderHistory(){
+
+let key = getAgentKey();
+
+let history = JSON.parse(localStorage.getItem(key) || "[]");
+
+let searchBox = document.getElementById("searchBox");
+let searchValue = searchBox ? searchBox.value.toLowerCase().trim() : "";
+
+if(searchValue){
+history = history.filter(item =>
+(item.order || "").toLowerCase().includes(searchValue)
+);
+}
+
+let container = document.getElementById("history");
+
+if(history.length === 0){
+container.innerHTML = `<div style="color:#aaa;">No recent cases found</div>`;
+return;
+}
+
+function highlight(text){
+if(!searchValue) return text || "";
+return (text || "").replaceAll(
+searchValue,
+`<mark style="background:yellow;color:black;">${searchValue}</mark>`
+);
+}
+
+container.innerHTML = "";
+
+history.forEach((item, index) => {
+
+container.innerHTML += `
+<div class="history-item">
+
+<b>Name:</b> ${item.name || ""}<br>
+<b>Order:</b> ${item.order || ""}<br>
+<b>Concern:</b> ${item.concern || ""}<br>
+<b>Delivery Partner:</b> ${item.deliveryPartner || "N/A"}<br>
+<b>Issue:</b> ${item.issue || ""}<br>
+<small>${item.date || ""}</small>
+<br>
+<b>Handled By:</b> <span 
+style="color:#3b82f6;font-weight:200;">
+${item.agent || "Unknown"}
+</span><br>
+
+<button class="danger" onclick="deleteCase(${index})">
+Delete
+</button>
+
+</div>
+`;
+  
+});
+
+}
+
+function deleteCase(index){
+
+let key = getAgentKey();
+
+let history = JSON.parse(localStorage.getItem(key) || "[]");
+
+let searchValue = document.getElementById("searchBox")?.value.toLowerCase().trim();
+
+if(searchValue){
+
+let filtered = history.filter(item =>
+(item.order || "").toLowerCase().includes(searchValue)
 );
 
-alert("Copied");
+let realItem = filtered[index];
+
+index = history.findIndex(x =>
+x.order === realItem.order &&
+x.date === realItem.date
+);
 
 }
 
-function clearForm(){
+history.splice(index,1);
 
-document
-.querySelectorAll("input,textarea")
-.forEach(x=>x.value="");
+localStorage.setItem(key, JSON.stringify(history));
 
-output.innerText =
-"Generated case note will appear here...";
+renderHistory();
+updateStats();
+}
+  
+function updateStats(){
 
+let key = getAgentKey();
+
+let history = JSON.parse(localStorage.getItem(key) || "[]");
+
+document.getElementById("totalCases").innerText = history.length;
+
+document.getElementById("refundCases").innerText =
+history.filter(x => (x.issue || "").includes("Refund Request")).length;
+
+document.getElementById("complaintCases").innerText =
+history.filter(x => (x.issue || "").includes("Complaint")).length;
+
+document.getElementById("escalationCases").innerText =
+history.filter(x =>
+(x.issue || "").includes("Complaint") ||
+(x.issue || "").includes("Refund Request") ||
+(x.issue || "").includes("Outlet Complaint")
+).length;
 }
 
-function sendCaseToWhatsApp(){
+function downloadCSV(){
 
-let url =
-"https://wa.me/?text=" +
-encodeURIComponent(output.innerText);
+let key = getAgentKey();
+let history = JSON.parse(localStorage.getItem(key) || "[]");
 
-window.open(url,"_blank");
-
+if(!history.length){
+alert("No history to download!");
+return;
 }
+
+let csv = "\Name , Order ID , Concern , Issue , Delivery Partner , Agent , Date\n";
+
+history.forEach(item => {
+
+let row = [
+item.name || "",
+item.order || "",
+item.concern || "",
+item.issue || "",
+item.deliveryPartner || "",
+item.agent || "",
+item.date || ""
+]
+.map(v => `"${String(v).replace(/"/g,'""')}"`)
+.join(",");
+
+csv += row + "\n";
+});
+
+let blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+let link = document.createElement("a");
+link.href = URL.createObjectURL(blob);
+link.download = "case_history.csv";
+
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+setTimeout(() => {
+URL.revokeObjectURL(link.href);
+}, 1000);
+
+                                         }
+
+/* INIT */
 renderHistory();
 updateStats();
 
-window.generateCase = generateCase;
-window.copyCase = copyCase;
-window.clearForm = clearForm;
-window.downloadCSV = downloadCSV;
-window.sendCaseToWhatsApp = sendCaseToWhatsApp;
+function sendCaseToWhatsApp(){
 
+let name = document.getElementById("name").value;
+let phone = document.getElementById("phone").value;
+let orderId = document.getElementById("orderId").value;
+let date = document.getElementById("date").value;
+let outlet = document.getElementById("outlet").value;
+let issue = document.getElementById("issueType").value;
+let concern = document.getElementById("customerConcern").value;
+let delivery = document.getElementById("deliveryPartner").value;
+
+if(!name || !orderId){
+alert("Please fill required fields!");
+return;
+}
+
+let message =
+`Name: ${name}
+Phone: ${phone}
+Order ID: ${orderId}
+Order Date: ${date}
+Outlet: ${outlet}
+Issue: ${issue}
+Concern: ${concern}
+Partner: ${delivery}
+`;
+
+let url = "https://wa.me/?text=" + encodeURIComponent(message);
+
+window.open(url, "_blank");
+}
+
+  
 </script>
 
+<footer style="
+margin-top:40px;
+text-align:center;
+padding:20px;
+color:#cbd5e1;
+font-size:14px;
+background:rgba(255,255,255,0.03);
+border-radius:12px;
+backdrop-filter:blur(10px);
+">
+  Built with by <b>Parth</b> • Uniserve System © 2026
+</footer>
+
+</body>
+</html>
