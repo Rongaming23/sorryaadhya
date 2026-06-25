@@ -314,7 +314,31 @@ Recent Cases
 
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+onSnapshot,
+deleteDoc,
+doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const firebaseConfig = {
+apiKey: "AIzaSyAdR4XaDcs2M7o43j2pu6K1zA3FhCrK-cA",
+authDomain: "customerdetailsuniserve.firebaseapp.com",
+projectId: "customerdetailsuniserve",
+storageBucket: "customerdetailsuniserve.firebasestorage.app",
+messagingSenderId: "125960501611",
+appId: "1:125960501611:web:4fbbe720ce8a063afbb42e",
+measurementId: "G-YK03S135FK"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+  
 
 function getAgentKey(){
   let agent = document.getElementById("agentSelect")?.value || "parth";
@@ -351,26 +375,48 @@ document.getElementById("output").innerText =
 "Generated case note will appear here...";
   }
   
-function saveHistory(){
+async function saveHistory(){
 
-let key = getAgentKey();
-let agent = document.getElementById("agentSelect").value;
+try{
 
-let history = JSON.parse(localStorage.getItem(key) || "[]");
+await addDoc(collection(db,"cases"),{
 
-history.unshift({
 name: document.getElementById("name").value,
+phone: document.getElementById("phone").value,
 order: document.getElementById("orderId").value,
-concern: document.getElementById("customerConcern").value,
+outlet: document.getElementById("outlet").value,
 issue: document.getElementById("issueType").value,
-deliveryPartner: document.getElementById("deliveryPartner").value,
-agent: agent,   // 
+concern: document.getElementById("customerConcern").value,
+agent: document.getElementById("agentSelect").value,
+deliveryPartner: document.getElementById("deliveryPartner")?.value || "",
 date: new Date().toLocaleString()
+
 });
 
+alert("Case Saved Successfully");
+
+}catch(error){
+
+console.error(error);
+alert("Error Saving Case");
+
+}
+
+}
+  
 history = history.slice(0,2000);
 
-localStorage.setItem(key, JSON.stringify(history));
+await addDoc(collection(db,"cases"),{
+name:name,
+phone:phone,
+orderId:orderId,
+outlet:outlet,
+issue:issue,
+concern:concern,
+deliveryPartner:deliveryPartner,
+agent:agent,
+createdAt:new Date()
+});
 
 renderHistory();
 updateStats();
@@ -378,17 +424,37 @@ updateStats();
 
 function renderHistory(){
 
-let key = getAgentKey();
+onSnapshot(collection(db,"cases"),(snapshot)=>{
 
-let history = JSON.parse(localStorage.getItem(key) || "[]");
+let container =
+document.getElementById("history");
 
-let searchBox = document.getElementById("searchBox");
-let searchValue = searchBox ? searchBox.value.toLowerCase().trim() : "";
+container.innerHTML = "";
 
-if(searchValue){
-history = history.filter(item =>
-(item.order || "").toLowerCase().includes(searchValue)
-);
+snapshot.forEach((docSnap)=>{
+
+const item = docSnap.data();
+
+container.innerHTML += `
+
+<div class="history-item">
+
+<b>Name:</b> ${item.name}<br>
+<b>Order:</b> ${item.order}<br>
+<b>Concern:</b> ${item.concern}<br>
+<b>Issue:</b> ${item.issue}<br>
+<b>Delivery Partner:</b> ${item.deliveryPartner}<br>
+<b>Handled By:</b> ${item.agent}<br>
+<small>${item.date}</small>
+
+</div>
+
+`;
+
+});
+
+});
+
 }
 
 let container = document.getElementById("history");
@@ -492,7 +558,40 @@ history.filter(x =>
 function downloadCSV(){
 
 let key = getAgentKey();
-let history = JSON.parse(localStorage.getItem(key) || "[]");
+  
+async function downloadCSV(){
+
+const snapshot =
+await getDocs(collection(db,"cases"));
+
+let csv =
+"Name,Order,Concern,Issue,Partner,Agent,Date\n";
+
+snapshot.forEach(doc=>{
+
+const item = doc.data();
+
+csv += `"${item.name}","${item.order}","${item.concern}","${item.issue}","${item.deliveryPartner}","${item.agent}","${item.date}"\n`;
+
+});
+
+const blob =
+new Blob([csv],{
+type:"text/csv"
+});
+
+const link =
+document.createElement("a");
+
+link.href =
+URL.createObjectURL(blob);
+
+link.download =
+"case_history.csv";
+
+link.click();
+
+}
 
 if(!history.length){
 alert("No history to download!");
