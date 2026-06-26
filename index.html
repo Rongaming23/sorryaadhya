@@ -205,7 +205,7 @@ try{
 await signInWithEmailAndPassword(auth, email, pass);
 document.getElementById("msg").innerText = "Login success";
 }catch(e){
-document.getElementById("msg").innerText = "❌ " + e.message;
+document.getElementById("msg").innerText = "❌ " + "User not Found";
 }
 }
 
