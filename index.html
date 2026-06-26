@@ -72,7 +72,7 @@ Login
 </div>
 
 <div class="card">
-<h3>📈 Reports (Issue Wise Breakdown)</h3>
+<h3>📈 On Going Live Reports</h3>
 <div id="reportBox">Loading reports...</div>
 </div>
   
@@ -214,8 +214,8 @@ let userRole = "agent";
 onAuthStateChanged(auth,(user)=>{
 if(user){
 
-// SIMPLE ROLE SYSTEM
-if(user.email === "parth@uniservecrm.com"){
+
+if(user.email === "sankudas@crm.com"){
 userRole = "admin";
 }else{
 userRole = "agent";
