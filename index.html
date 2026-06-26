@@ -210,13 +210,24 @@ document.getElementById("msg").innerText = "❌ " + e.message;
 }
 }
 
+let userRole = "agent";
+
 onAuthStateChanged(auth,(user)=>{
 if(user){
+
+// SIMPLE ROLE SYSTEM
+if(user.email === "parth@uniservecrm.com"){
+userRole = "admin";
+}else{
+userRole = "agent";
+}
+
 document.getElementById("authBox").style.display="none";
 }else{
 document.getElementById("authBox").style.display="flex";
 }
 });
+
 
 window.logout = function(){
 signOut(auth);
@@ -320,7 +331,10 @@ html+=`
 <td>${x.issue}</td>
 <td>${x.partner}</td>
 <td>${x.agent}</td>
-<td><button class="danger" onclick="del('${d.id}')">Delete</button></td>
+${userRole === "admin" 
+? `<button class="danger" onclick="del('${d.id}')">Delete</button>` 
+: `<span style="color:#64748b;">No Access</span>`
+}
 </tr>`;
 });
 
@@ -333,6 +347,12 @@ updateReports();
 
 /* all right for uniserve */
 window.del = async function(id){
+
+if(userRole !== "admin"){
+alert("❌ Only admin can delete cases");
+return;
+}
+
 await deleteDoc(doc(db,"cases",id));
 }
 
