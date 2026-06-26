@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Wow Case Crm By Uniserve</title>
+<title>UNISERVE CRM Enterprise v3 Pro</title>
 
 <style>
-
 body{
 margin:0;
 font-family:Inter,Segoe UI;
@@ -13,57 +12,44 @@ background:#0b1220;
 color:#e5e7eb;
 }
 
-/* LOGIN OVERLAY */
+/* LOGIN */
 #authBox{
 position:fixed;
 inset:0;
 display:flex;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 background:rgba(2,6,23,0.95);
 backdrop-filter:blur(12px);
 z-index:9999;
-flex-direction:column;
-}
-
-#authBox h2{
-margin-bottom:20px;
-font-weight:600;
 }
 
 #authBox input{
 width:280px;
 padding:12px;
-margin:6px 0;
+margin:6px;
 border-radius:10px;
 border:1px solid #334155;
 background:#111827;
-color:white;
-outline:none;
+color:#fff;
 }
 
 #authBox button{
 width:280px;
 padding:12px;
-margin-top:10px;
 background:#3b82f6;
 border:none;
 border-radius:10px;
-color:white;
+color:#fff;
 font-weight:600;
-cursor:pointer;
 }
 
-/* MAIN CONTAINER */
+/* MAIN */
 .container{
 padding:20px;
 max-width:1200px;
 margin:auto;
-}
-
-/* TOP BAR */
-h2{
-font-weight:600;
 }
 
 /* CARDS */
@@ -72,48 +58,39 @@ background:linear-gradient(145deg,#0f172a,#111827);
 padding:16px;
 border-radius:14px;
 margin-bottom:16px;
-box-shadow:0 8px 25px rgba(0,0,0,0.3);
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* INPUTS */
+/* INPUT */
 input,select,textarea{
 width:100%;
 padding:12px;
 margin:6px 0;
 background:#0f172a;
-color:white;
+color:#fff;
 border:1px solid #334155;
 border-radius:10px;
-outline:none;
 }
 
 /* BUTTONS */
 button{
 padding:10px 14px;
-margin:6px 4px;
+margin:5px;
 border-radius:10px;
 border:none;
 cursor:pointer;
 font-weight:500;
-transition:0.2s;
 }
 
-button:hover{
-transform:translateY(-1px);
-opacity:0.9;
-}
-
-.primary{background:#3b82f6;color:white;}
-.success{background:#22c55e;color:white;}
-.danger{background:#ef4444;color:white;}
+.primary{background:#3b82f6;color:#fff;}
+.success{background:#22c55e;color:#fff;}
+.danger{background:#ef4444;color:#fff;}
 
 /* TABLE */
 table{
 width:100%;
 border-collapse:collapse;
 margin-top:10px;
-overflow:hidden;
-border-radius:12px;
 }
 
 th{
@@ -121,7 +98,6 @@ background:#111827;
 padding:12px;
 font-size:13px;
 text-transform:uppercase;
-letter-spacing:0.5px;
 }
 
 td{
@@ -130,98 +106,42 @@ text-align:center;
 border-bottom:1px solid #1f2937;
 }
 
-tr:hover{
-background:#111827;
-transition:0.2s;
-}
-
-/* NOTE */
-pre{
-background:#0f172a;
-padding:12px;
-border-radius:12px;
-white-space:pre-wrap;
-}
-
-/* FOOTER */
-footer{
-margin-top:40px;
-text-align:center;
-padding:20px;
-color:#94a3b8;
-font-size:13px;
-}
-
-/* SMALL UX IMPROVEMENT */
-.container h2{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
+tr:hover{background:#111827;}
+pre{white-space:pre-wrap;background:#0f172a;padding:12px;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<body>
-
-<div id="authBox" style="
-position:fixed;
-inset:0;
-background:#0f172a;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:9999;
-color:white;
-">
-
-<h2>🔐  Uniserver crm Login</h2>
-
-<input id="email" placeholder="Email" style="padding:10px;margin:5px;width:250px;">
-<input id="password" type="password" placeholder="Password" style="padding:10px;margin:5px;width:250px;">
-
-<button onclick="login()" style="padding:10px 20px;background:#3b82f6;color:white;border:none;">
-Login
-</button>
-
+<!-- LOGIN -->
+<div id="authBox">
+<h2>🔐 UNISERVE CRM LOGIN</h2>
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
 <p id="msg"></p>
 </div>
-  
+
 <div class="container">
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
-  <h2>🚀 Uniserve CRM Online v2</h2>
-
-  <button onclick="logout()" style="
-    background:#ef4444;
-    color:white;
-    padding:8px 12px;
-    border:none;
-    border-radius:6px;
-  ">
-    Logout
-  </button>
+<h2>🚀 UNISERVE CRM Enterprise v3 Pro</h2>
+<button class="danger" onclick="logout()">Logout</button>
 </div>
 
-<div class="card" style="overflow-x:auto;">
-<h3>📈 On Going Live Cases</h3>
-<div id="reportBox">Loading reports...</div>
+<div class="card">
+<h3>📈 Live Reports</h3>
+<div id="reportBox">Loading...</div>
 </div>
-  
+
 <input id="name" placeholder="Customer Name">
 <input id="phone" placeholder="Phone">
 <input id="order" placeholder="Order ID">
-<input id="date" placeholder="Enter Order Date">
+<input id="date" placeholder="Order Date">
 <input id="outlet" placeholder="Outlet">
 
-  
 <textarea id="concern" placeholder="Customer Concern"></textarea>
 
-
-  
 <select id="issue">
 <option>Missing Item</option>
 <option>Cancel Request</option>
@@ -258,7 +178,7 @@ Login
 </select>
 
 <button class="primary" onclick="addCase()">Generate Case</button>
-<button class="success" onclick="copyCase()">Copy Case</button>
+<button class="success" onclick="copyCase()">Copy</button>
 <button class="danger" onclick="clearForm()">Clear</button>
 <button class="success" onclick="csv()">CSV</button>
 <button class="success" onclick="whatsapp()">WhatsApp</button>
@@ -272,13 +192,12 @@ Login
 
 <div class="card">
 <h3>📁 Cases</h3>
-
-<input id="search" placeholder="Search Order ID..." onkeyup="filter()">
+<input id="search" placeholder="Search..." onkeyup="filter()">
 
 <table>
 <thead>
 <tr>
-<th>Id</th>
+<th>ID</th>
 <th>Phone</th>
 <th>Name</th>
 <th>Order</th>
@@ -291,21 +210,20 @@ Login
 </thead>
 <tbody id="table"></tbody>
 </table>
-
 </div>
 
 </div>
 
 <script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
 getAuth,
 signInWithEmailAndPassword,
 onAuthStateChanged,
 signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
 getFirestore,
 collection,
@@ -318,76 +236,65 @@ orderBy,
 serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const firebaseConfig = {
+/* FIREBASE */
+const app = initializeApp({
 apiKey: "AIzaSyAdR4XaDcs2M7o43j2pu6K1zA3FhCrK-cA",
 authDomain: "customerdetailsuniserve.firebaseapp.com",
 projectId: "customerdetailsuniserve",
 storageBucket: "customerdetailsuniserve.firebasestorage.app",
 messagingSenderId: "125960501611",
-appId: "1:125960501611:web:4fbbe720ce8a063afbb42e",
-measurementId: "G-YK03S135FK"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-window.login = async function () {
-let email = document.getElementById("email").value;
-let pass = document.getElementById("password").value;
-
-try {
-await signInWithEmailAndPassword(auth, email, pass);
-document.getElementById("msg").innerText = "Login success";
-} catch (e) {
-document.getElementById("msg").innerText = e.message;
-}
-};
-
-let userRole = "agent";
-
-onAuthStateChanged(auth,(user)=>{
-if(user){
-
-
-if(user.email === "sankudas@crm.com"){
-userRole = "admin";
-}else{
-userRole = "agent";
-}
-
-document.getElementById("authBox").style.display="none";
-}else{
-document.getElementById("authBox").style.display="flex";
-}
+appId: "1:125960501611:web:4fbbe720ce8a063afbb42e"
 });
 
-
-window.logout = function(){
-signOut(auth);
-}
+const db = getFirestore(app);
+const auth = getAuth(app);
 const ref = collection(db,"cases");
 
 let allData = [];
 let lastNote = "";
+let userRole = "agent";
 
-/* all right for uniserve */
-const get = id => document.getElementById(id).value;
+/* LOGIN */
+window.login = async function(){
+try{
+await signInWithEmailAndPassword(
+auth,
+email.value,
+password.value
+);
+msg.innerText = "Login Success";
+}catch(e){
+msg.innerText = e.message;
+}
+};
 
-/* all right for uniserve */
+/* AUTH */
+onAuthStateChanged(auth,(user)=>{
+if(user){
+userRole = user.email === "sankudas@crm.com" ? "admin" : "agent";
+authBox.style.display="none";
+}else{
+authBox.style.display="flex";
+}
+});
+
+/* LOGOUT */
+window.logout = ()=>signOut(auth);
+
+/* ADD CASE */
 window.addCase = async function(){
 
 const data = {
-name:get("name"),
-phone:get("phone"),
-order:get("order"),
-date:get("date"),
-outlet:get("outlet"),
-concern:get("concern"),
-issue:get("issue"),
-partner:get("partner"),
-agent:get("agent"),
-createdBy: auth.currentUser ? auth.currentUser.email : "unknown",
+name:name.value,
+phone:phone.value,
+order:order.value,
+date:date.value,
+outlet:outlet.value,
+concern:concern.value,
+issue:issue.value,
+partner:partner.value,
+agent:agent.value,
+createdBy:auth.currentUser?.email || "unknown",
 time:serverTimestamp()
 };
 
@@ -396,123 +303,88 @@ alert("Name & Order required");
 return;
 }
 
-
-  
 await addDoc(ref,data);
 
-/* case section dont play otherwise Parth will kill you */
 lastNote =
 `Name: ${data.name}
 Phone: ${data.phone}
 Order: ${data.order}
 Date: ${data.date}
 Outlet: ${data.outlet}
-Issue: ${data.issue} : Concern: ${data.concern}
+Issue: ${data.issue}
+Concern: ${data.concern}
 Partner: ${data.partner}`;
 
-document.getElementById("note").innerText = lastNote;
-
+note.innerText = lastNote;
 clearForm();
+};
+
+/* SNAPSHOT */
+onSnapshot(query(ref,orderBy("time","desc")), snap=>{
+allData = [];
+let html="";
+let i=1;
+
+snap.forEach(d=>{
+let x=d.data();
+x._id=d.id;
+
+if(userRole==="admin" || x.createdBy===auth.currentUser?.email){
+allData.push(x);
 }
-
-  
-function updateReports(){
-
-let map = {};
+});
 
 allData.forEach(x=>{
-let key = x.issue || "Unknown";
-map[key] = (map[key] || 0) + 1;
-});
-
-let html = "";
-
-Object.keys(map).forEach(issue=>{
-html += `
-<div style="
-background:#1e293b;
-padding:10px;
-margin:5px 0;
-border-radius:8px;
-display:flex;
-justify-content:space-between;
-">
-<span>${issue}</span>
-<b>${map[issue]}</b>
-</div>`;
-});
-
-document.getElementById("reportBox").innerHTML = html || "No data";
-}
-  
-  
-/* all right for uniserve */
-onSnapshot(query(ref, orderBy("time", "desc")), (snap) => {
-
-allData = [];
-let html = "";
-let i = 1;
-
-snap.forEach((d) => {
-let x = d.data();
-x._id = d.id;
-
-/* ROLE FILTER */
-if (userRole === "admin") {
-allData.push(x);
-} else if (x.createdBy === auth.currentUser?.email) {
-allData.push(x);
-}
-});
-
-allData.forEach((x) => {
-html += `
+html+=`
 <tr>
-<td>CX${String(i++).padStart(5, "0")}</td>
-<td style="text-align:center">${x.phone || ""}</td>
-<td style="text-align:center">${x.name || ""}</td>
-<td style="text-align:center">${x.order || ""}</td>
-<td style="text-align:center">${x.issue || ""}</td>
-<td style="text-align:center">${x.partner || ""}</td>
-<td style="text-align:center">${x.agent || ""}</td>
-<td style="text-align:center">${x.createdBy || ""}</td>
+<td>CX${String(i++).padStart(5,"0")}</td>
+<td>${x.phone||""}</td>
+<td>${x.name||""}</td>
+<td>${x.order||""}</td>
+<td>${x.issue||""}</td>
+<td>${x.partner||""}</td>
+<td>${x.agent||""}</td>
+<td>${x.createdBy||""}</td>
 <td>
-${userRole === "admin"
+${userRole==="admin"
 ? `<button class="danger" onclick="del('${x._id}')">Delete</button>`
-: `<span style="color:#64748b;">No Access</span>`
-}
+: "No Access"}
 </td>
 </tr>`;
 });
 
-document.getElementById("table").innerHTML = html;
-
+table.innerHTML = html;
 updateReports();
 });
 
-/* all right for uniserve */
+/* DELETE */
 window.del = async function(id){
-
-if(userRole !== "admin"){
-alert("❌ Only admin can delete cases");
-return;
-}
-
+if(userRole!=="admin") return alert("Admin only");
 await deleteDoc(doc(db,"cases",id));
+};
+
+/* REPORT */
+function updateReports(){
+let map={};
+allData.forEach(x=>{
+map[x.issue]=(map[x.issue]||0)+1;
+});
+
+reportBox.innerHTML = Object.keys(map)
+.map(k=>`<div>${k} - <b>${map[k]}</b></div>`)
+.join("") || "No Data";
 }
 
-/* all right for uniserve */
-window.copyCase = function(){
-navigator.clipboard.writeText(lastNote || "");
-}
+/* COPY */
+window.copyCase = ()=>navigator.clipboard.writeText(lastNote);
 
-/* all right for uniserve */
-window.clearForm = function(){
-document.querySelectorAll("input,textarea").forEach(e=>e.value="");
-}
+/* CLEAR */
+window.clearForm = ()=>{
+[name,phone,order,date,outlet,concern].forEach(i=>i.value="");
+};
 
-/* all right for uniserve */
-window.csv = function(){
+/* CSV */
+window.csv = ()=>{
 let csv="Name,Order,Issue,Partner,Agent\n";
 allData.forEach(x=>{
 csv+=`${x.name},${x.order},${x.issue},${x.partner},${x.agent}\n`;
@@ -522,33 +394,22 @@ let a=document.createElement("a");
 a.href=URL.createObjectURL(b);
 a.download="cases.csv";
 a.click();
-}
+};
 
-/* all right for uniserve */
-window.whatsapp = function(){
+/* WHATSAPP */
+window.whatsapp = ()=>{
 window.open("https://wa.me/?text="+encodeURIComponent(lastNote));
-}
+};
 
-/* all right for uniserve */
-window.filter = function(){
-let v=document.getElementById("search").value.toLowerCase();
+/* FILTER */
+window.filter = ()=>{
+let v=search.value.toLowerCase();
 document.querySelectorAll("tbody tr").forEach(r=>{
 r.style.display=r.innerText.toLowerCase().includes(v)?"":"none";
 });
-}
+};
 
 </script>
-<footer style="
-margin-top:40px;
-text-align:center;
-padding:20px;
-color:#cbd5e1;
-font-size:14px;
-background:rgba(255,255,255,0.03);
-border-radius:12px;
-backdrop-filter:blur(10px);
-">
-  Built with by <b>Parth</b> • Uniserve System v2 © 2026
-</footer>
+
 </body>
 </html>
