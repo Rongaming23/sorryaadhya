@@ -5,6 +5,42 @@
 <title>Wow Case Crm By Uniserve</title>
 
 <style>
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+background:#111827;
+border-radius:12px;
+overflow:hidden;
+}
+
+th{
+background:#1e293b;
+text-align:center;
+padding:12px;
+font-size:14px;
+}
+
+td{
+text-align:center;
+padding:12px;
+color:#e5e7eb;
+}
+
+tr:hover{
+background:#1f2937;
+transition:0.2s;
+}
+
+tbody tr{
+border-bottom:1px solid #1f2937;
+}
+
+.card h3{
+margin-bottom:10px;
+}
+  
 body{margin:0;font-family:Segoe UI;background:#0f172a;color:white}
 .container{padding:20px;max-width:1200px;margin:auto}
 
@@ -71,7 +107,7 @@ Login
   </button>
 </div>
 
-<div class="card">
+<div class="card" style="overflow-x:auto;">
 <h3>📈 On Going Live Cases</h3>
 <div id="reportBox">Loading reports...</div>
 </div>
@@ -150,6 +186,7 @@ Login
 <th>Issue</th>
 <th>Partner</th>
 <th>Agent</th>
+<th>Created By</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -196,18 +233,17 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-window.login = async function(){
-
+window.login = async function () {
 let email = document.getElementById("email").value;
 let pass = document.getElementById("password").value;
 
-try{
+try {
 await signInWithEmailAndPassword(auth, email, pass);
 document.getElementById("msg").innerText = "Login success";
-}catch(e){
-document.getElementById("msg").innerText = "❌ " + "User not Found";
+} catch (e) {
+document.getElementById("msg").innerText = e.message;
 }
-}
+};
 
 let userRole = "agent";
 
@@ -252,6 +288,7 @@ concern:get("concern"),
 issue:get("issue"),
 partner:get("partner"),
 agent:get("agent"),
+createdBy: auth.currentUser ? auth.currentUser.email : "unknown",
 time:serverTimestamp()
 };
 
@@ -311,37 +348,47 @@ document.getElementById("reportBox").innerHTML = html || "No data";
   
   
 /* all right for uniserve */
-onSnapshot(query(ref,orderBy("time","desc")),(snap)=>{
+onSnapshot(query(ref, orderBy("time", "desc")), (snap) => {
 
-allData=[];
-let html="";
-let i=1;
+allData = [];
+let html = "";
+let i = 1;
 
-snap.forEach(d=>{
-let x=d.data();
+snap.forEach((d) => {
+let x = d.data();
+x._id = d.id;
+
+/* ROLE FILTER */
+if (userRole === "admin") {
 allData.push(x);
+} else if (x.createdBy === auth.currentUser?.email) {
+allData.push(x);
+}
+});
 
-html+=`
+allData.forEach((x) => {
+html += `
 <tr>
-<td>CX${String(i++).padStart(5,"0")}</td>
-<td>${x.phone}</td>
-<td>${x.name}</td>
-<td>${x.order}</td>
-<td>${x.issue}</td>
-<td>${x.partner}</td>
-<td>${x.agent}</td>
-${userRole === "admin" 
-? `<button class="danger" onclick="del('${d.id}')">Delete</button>` 
+<td>CX${String(i++).padStart(5, "0")}</td>
+<td style="text-align:center">${x.phone || ""}</td>
+<td style="text-align:center">${x.name || ""}</td>
+<td style="text-align:center">${x.order || ""}</td>
+<td style="text-align:center">${x.issue || ""}</td>
+<td style="text-align:center">${x.partner || ""}</td>
+<td style="text-align:center">${x.agent || ""}</td>
+<td style="text-align:center">${x.createdBy || ""}</td>
+<td>
+${userRole === "admin"
+? `<button class="danger" onclick="del('${x._id}')">Delete</button>`
 : `<span style="color:#64748b;">No Access</span>`
 }
+</td>
 </tr>`;
 });
 
-document.getElementById("table").innerHTML=html;
+document.getElementById("table").innerHTML = html;
 
-/* all right for uniserve */
 updateReports();
-
 });
 
 /* all right for uniserve */
