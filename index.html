@@ -2,1014 +2,132 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>UNISERVE CRM v5</title>
 
 <link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
 
 <div class="wrapper">
 
-<!-- =========================
-SIDEBAR
-========================= -->
-
+<!-- SIDEBAR -->
 <div class="sidebar">
-
-<div class="logo">
-
-UNISERVE CRM
-
-</div>
+<div class="logo">UNISERVE CRM</div>
 
 <div class="menu">
-
-<a href="#" class="active">
-
-📊 <span>Dashboard</span>
-
-</a>
-
-<a href="#case">
-
-➕ <span>New Case</span>
-
-</a>
-
-<a href="#history">
-
-📋 <span>Case History</span>
-
-</a>
-
-<a href="#reports">
-
-📈 <span>Reports</span>
-
-</a>
-
-<a href="#agents">
-
-👥 <span>Agents</span>
-
-</a>
-
-<a href="#settings">
-
-⚙ <span>Settings</span>
-
-</a>
-
-<a href="#" onclick="logout()">
-
-🚪 <span>Logout</span>
-
-</a>
-
+<a href="#" class="active">📊 Dashboard</a>
+<a href="#history">📋 Case History</a>
+<a href="#reports">📈 Reports</a>
+<a href="#" onclick="logout()">🚪 Logout</a>
+</div>
 </div>
 
-</div>
-
-<!-- =========================
-MAIN
-========================= -->
-
+<!-- MAIN -->
 <div class="main">
 
-<!-- =========================
-TOP NAVBAR
-========================= -->
-
+<!-- NAVBAR -->
 <div class="navbar">
-
-<div class="nav-left">
-
-<h2 class="page-title">
-
-Customer Support Dashboard
-
-</h2>
-
-</div>
-
-<div class="nav-right">
-
-<div class="notification">
-
-🔔
-
-<span id="notificationCount">
-
-0
-
-</span>
-
-</div>
+<h2>Customer Support Dashboard</h2>
 
 <div class="user-box">
-
-<div class="avatar">
-
-P
-
-</div>
-
+<div class="avatar">P</div>
 <div>
-
-<div class="user-name" id="currentUser">
-
-Parth
-
+<div id="currentUser">Agent</div>
+<div>Support Executive</div>
+</div>
+</div>
 </div>
 
-<div class="user-role">
-
-Support Executive
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- =========================
-CONTENT
-========================= -->
-
-<div class="content fade-in">
-
-<div class="page-header">
-
-<div>
-
-<h1>
-
-Welcome Back 👋
-
-</h1>
-
-<p>
-
-Realtime Customer Support Dashboard
-
-</p>
-
-</div>
-
-<div>
-
-<button class="btn btn-primary" onclick="csv()">
-
-⬇ Download CSV
-
-</button>
-
-</div>
-
-</div>
-
-<!-- =========================
-DASHBOARD CARDS
-========================= -->
-
+<!-- DASHBOARD CARDS -->
 <div class="cards">
 
 <div class="card blue">
-
-<div class="card-icon blue-icon">
-
-🎫
-
-</div>
-
-<div class="card-title">
-
-TOTAL CASES
-
-</div>
-
-<div class="card-value"
-
-id="totalCases">
-
-0
-
-</div>
-
+<h3>Total Cases</h3>
+<div id="totalCases">0</div>
 </div>
 
 <div class="card green">
-
-<div class="card-icon green-icon">
-
-💰
-
-</div>
-
-<div class="card-title">
-
-REFUNDS
-
-</div>
-
-<div class="card-value"
-
-id="refundCases">
-
-0
-
-</div>
-
+<h3>Refunds</h3>
+<div id="refundCases">0</div>
 </div>
 
 <div class="card orange">
-
-<div class="card-icon orange-icon">
-
-⚠
-
-</div>
-
-<div class="card-title">
-
-COMPLAINTS
-
-</div>
-
-<div class="card-value"
-
-id="complaintCases">
-
-0
-
-</div>
-
+<h3>Complaints</h3>
+<div id="complaintCases">0</div>
 </div>
 
 <div class="card red">
-
-<div class="card-icon red-icon">
-
-🚨
-
-</div>
-
-<div class="card-title">
-
-ESCALATIONS
-
-</div>
-
-<div class="card-value"
-
-id="escalationCases">
-
-0
-
+<h3>Escalations</h3>
+<div id="escalationCases">0</div>
 </div>
 
 </div>
 
-</div>
-
-<!-- =========================
-NEXT PART STARTS HERE
-========================= -->
-
-<div class="grid-2">
-
-<!-- Customer Form Comes Here -->
-
-<!-- Generated Note Comes Here -->
-
-</div>
-
-<!-- Remaining HTML in Part 2 -->
-
-</div>
-
-</div>
-
-</div>
-
-<script type="module" src="firebase.js"></script>
-<script type="module" src="auth.js"></script>
-<script type="module" src="crm.js"></script>
-
-</body>
-
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>UNISERVE CRM v5</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-</head>
-
-<body>
-
-<div class="wrapper">
-
-<!-- =========================
-SIDEBAR
-========================= -->
-
-<div class="sidebar">
-
-<div class="logo">
-
-UNISERVE CRM
-
-</div>
-
-<div class="menu">
-
-<a href="#" class="active">
-
-📊 <span>Dashboard</span>
-
-</a>
-
-<a href="#case">
-
-➕ <span>New Case</span>
-
-</a>
-
-<a href="#history">
-
-📋 <span>Case History</span>
-
-</a>
-
-<a href="#reports">
-
-📈 <span>Reports</span>
-
-</a>
-
-<a href="#agents">
-
-👥 <span>Agents</span>
-
-</a>
-
-<a href="#settings">
-
-⚙ <span>Settings</span>
-
-</a>
-
-<a href="#" onclick="logout()">
-
-🚪 <span>Logout</span>
-
-</a>
-
-</div>
-
-</div>
-
-<!-- =========================
-MAIN
-========================= -->
-
-<div class="main">
-
-<!-- =========================
-TOP NAVBAR
-========================= -->
-
-<div class="navbar">
-
-<div class="nav-left">
-
-<h2 class="page-title">
-
-Customer Support Dashboard
-
-</h2>
-
-</div>
-
-<div class="nav-right">
-
-<div class="notification">
-
-🔔
-
-<span id="notificationCount">
-
-0
-
-</span>
-
-</div>
-
-<div class="user-box">
-
-<div class="avatar">
-
-P
-
-</div>
-
-<div>
-
-<div class="user-name" id="currentUser">
-
-Parth
-
-</div>
-
-<div class="user-role">
-
-Support Executive
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- =========================
-CONTENT
-========================= -->
-
-<div class="content fade-in">
-
-<div class="page-header">
-
-<div>
-
-<h1>
-
-Welcome Back 👋
-
-</h1>
-
-<p>
-
-Realtime Customer Support Dashboard
-
-</p>
-
-</div>
-
-<div>
-
-<button class="btn btn-primary" onclick="csv()">
-
-⬇ Download CSV
-
-</button>
-
-</div>
-
-</div>
-
-<!-- =========================
-DASHBOARD CARDS
-========================= -->
-
-<div class="cards">
-
-<div class="card blue">
-
-<div class="card-icon blue-icon">
-
-🎫
-
-</div>
-
-<div class="card-title">
-
-TOTAL CASES
-
-</div>
-
-<div class="card-value"
-
-id="totalCases">
-
-0
-
-</div>
-
-</div>
-
-<div class="card green">
-
-<div class="card-icon green-icon">
-
-💰
-
-</div>
-
-<div class="card-title">
-
-REFUNDS
-
-</div>
-
-<div class="card-value"
-
-id="refundCases">
-
-0
-
-</div>
-
-</div>
-
-<div class="card orange">
-
-<div class="card-icon orange-icon">
-
-⚠
-
-</div>
-
-<div class="card-title">
-
-COMPLAINTS
-
-</div>
-
-<div class="card-value"
-
-id="complaintCases">
-
-0
-
-</div>
-
-</div>
-
-<div class="card red">
-
-<div class="card-icon red-icon">
-
-🚨
-
-</div>
-
-<div class="card-title">
-
-ESCALATIONS
-
-</div>
-
-<div class="card-value"
-
-id="escalationCases">
-
-0
-
-</div>
-
-</div>
-
-</div>
-
-<!-- =========================
-NEXT PART STARTS HERE
-========================= -->
-
-<div class="grid-2">
-
-<!-- Customer Form Comes Here -->
-
-<!-- Generated Note Comes Here -->
-
-</div>
-
-<!-- Remaining HTML in Part 2 -->
-
-</div>
-
-</div>
-
-</div>
-
-<script type="module" src="firebase.js"></script>
-<script type="module" src="auth.js"></script>
-<script type="module" src="crm.js"></script>
-
-</body>
-
-</html>
-
-<!-- =====================================================
-CASE HISTORY
-===================================================== -->
-
+<!-- CASE HISTORY -->
 <div class="box" id="history">
 
-<h2 class="box-title">
-📋 Firestore Case History
-</h2>
+<h2>Case History</h2>
 
-<div class="filters">
-
-<input
-type="text"
-id="searchBox"
-placeholder="🔍 Search Name / Order ID..."
-onkeyup="searchCases()">
-
-<select id="filterIssue" onchange="filterCases()">
-<option value="">All Issues</option>
-<option>Missing Item</option>
-<option>Refund Request</option>
-<option>Complaint</option>
-<option>Food Quality Issue</option>
-<option>Wrong Order</option>
-<option>Packaging Issue</option>
-<option>Payment Issue</option>
-<option>Cancel Request</option>
-<option>Delivery Partner Issue</option>
-<option>Business Query</option>
-</select>
-
-<select id="filterPartner" onchange="filterCases()">
-<option value="">All Partners</option>
-<option>Swiggy</option>
-<option>Zomato</option>
-<option>Magicpin</option>
-<option>Wow Eats</option>
-<option>Toing</option>
-<option>Direct Outlet</option>
-</select>
-
-<button class="btn btn-success" onclick="csv()">
-⬇ Download Firestore Query
-</button>
-
-</div>
-
-<div class="table-box">
+<input type="text" id="searchBox" placeholder="Search..." onkeyup="searchCases()">
 
 <table>
-
 <thead>
-
 <tr>
-
-<th>Ticket ID</th>
-
+<th>ID</th>
 <th>Phone</th>
-
 <th>Name</th>
-
-<th>Order ID</th>
-
+<th>Order</th>
 <th>Issue</th>
-
 <th>Partner</th>
-
 <th>Agent</th>
-
 <th>Created By</th>
-
 <th>Date</th>
-
 <th>Action</th>
-
 </tr>
-
 </thead>
 
 <tbody id="table">
-
 <tr>
-
-<td colspan="10" style="text-align:center;padding:40px;">
-Loading Firestore Data...
-</td>
-
+<td colspan="10">Loading...</td>
 </tr>
-
 </tbody>
 
 </table>
 
 </div>
 
-</div>
-
-<!-- =====================================================
-REPORTS
-===================================================== -->
-
+<!-- REPORTS -->
 <div class="box" id="reports">
 
-<h2 class="box-title">
-📊 Reports Dashboard
-</h2>
+<h2>Reports</h2>
 
-<div class="report-grid">
-
-<div class="report-card">
-
-<h2 id="reportTotal">0</h2>
-
-<p>Total Cases</p>
+<div id="reportBox">No Reports</div>
 
 </div>
 
-<div class="report-card">
-
-<h2 id="reportRefund">0</h2>
-
-<p>Refund Requests</p>
-
-</div>
-
-<div class="report-card">
-
-<h2 id="reportComplaint">0</h2>
-
-<p>Complaints</p>
-
-</div>
-
-<div class="report-card">
-
-<h2 id="reportEscalation">0</h2>
-
-<p>Escalations</p>
-
-</div>
-
-</div>
-
-<br>
-
-<h3 style="margin-bottom:15px;">
-Issue Wise Report
-</h3>
-
-<div id="reportBox">
-
-No Reports Yet
-
-</div>
-
-</div>
-
-<!-- =====================================================
-RECENT ACTIVITY
-===================================================== -->
-
+<!-- ACTIVITY -->
 <div class="box">
-
-<h2 class="box-title">
-
-🕒 Recent Activity
-
-</h2>
-
-<div id="activityBox" class="activity">
-
-<div class="activity-item">
-
-<div class="activity-icon">
-
-📌
-
+<h2>Recent Activity</h2>
+<div id="activityBox">Waiting for data...</div>
 </div>
 
-<div>
-
-<div class="activity-title">
-
-Waiting for Firestore...
-
-</div>
-
-<div class="activity-time">
-
-Realtime Updates Enabled
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- =====================================================
-FOOTER
-===================================================== -->
-
+<!-- FOOTER -->
 <div class="footer">
-
-UNISERVE CRM v5 © 2026<br>
-
-Developed by <b>Parth</b>
+UNISERVE CRM © 2026
+</div>
 
 </div>
-<!-- ==========================================
-     JAVASCRIPT FILES
-=========================================== -->
+</div>
 
+<!-- ONLY ONE SCRIPT LOADING -->
 <script type="module" src="firebase.js"></script>
 <script type="module" src="auth.js"></script>
 <script type="module" src="crm.js"></script>
-
-<!-- ==========================================
-     DASHBOARD FUNCTIONS
-=========================================== -->
-
-<script>
-
-// Show logged-in email
-window.showUser = function(email){
-
-    document.getElementById("currentUser").innerHTML =
-        email || "Agent";
-
-}
-
-// Dashboard counters
-window.updateDashboard = function(data){
-
-    let total = data.length;
-
-    let refund = data.filter(x=>x.issue==="Refund Request").length;
-
-    let complaint = data.filter(x=>
-        (x.issue||"").includes("Complaint")
-    ).length;
-
-    let escalation = data.filter(x=>
-        (x.issue||"").includes("Complaint") ||
-        x.issue==="Refund Request"
-    ).length;
-
-    document.getElementById("totalCases").innerText = total;
-
-    document.getElementById("refundCases").innerText = refund;
-
-    document.getElementById("complaintCases").innerText = complaint;
-
-    document.getElementById("escalationCases").innerText = escalation;
-
-    // Report cards
-
-    document.getElementById("reportTotal").innerText = total;
-
-    document.getElementById("reportRefund").innerText = refund;
-
-    document.getElementById("reportComplaint").innerText = complaint;
-
-    document.getElementById("reportEscalation").innerText = escalation;
-
-}
-
-// Search
-window.searchCases=function(){
-
-    let value=document.getElementById("searchBox")
-    .value.toLowerCase();
-
-    let rows=document.querySelectorAll("#table tr");
-
-    rows.forEach(r=>{
-
-        if(r.innerText.toLowerCase().includes(value)){
-
-            r.style.display="";
-
-        }else{
-
-            r.style.display="none";
-
-        }
-
-    });
-
-}
-
-// Filter placeholder
-window.filterCases=function(){
-
-    // Filtering is handled in crm.js
-    // Keep this function so HTML doesn't throw errors
-
-}
-
-// WhatsApp
-window.sendCaseToWhatsApp=function(){
-
-    let note=document.getElementById("note").innerText;
-
-    if(note.trim()==""){
-
-        alert("Generate a case first.");
-
-        return;
-
-    }
-
-    window.open(
-
-        "https://wa.me/?text="+encodeURIComponent(note),
-
-        "_blank"
-
-    );
-
-}
-
-// Notification Badge
-window.setNotification=function(total){
-
-    document.getElementById("notificationCount").innerText=total;
-
-}
-
-// Recent Activity
-window.addActivity=function(text){
-
-    const box=document.getElementById("activityBox");
-
-    const div=document.createElement("div");
-
-    div.className="activity-item";
-
-    div.innerHTML=`
-
-<div class="activity-icon">
-
-✅
-
-</div>
-
-<div>
-
-<div class="activity-title">
-
-${text}
-
-</div>
-
-<div class="activity-time">
-
-${new Date().toLocaleString()}
-
-</div>
-
-</div>
-
-`;
-
-    box.prepend(div);
-
-}
-
-// Auto Ticket Format
-window.ticketId=function(i){
-
-    return "CX"+String(i).padStart(5,"0");
-
-}
-
-</script>
 
 </body>
 </html>
