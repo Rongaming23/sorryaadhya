@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Uniserve CRM PRO LIVE</title>
+<title>Wow Case Crm By Uniserve</title>
 
 <style>
 body{margin:0;font-family:Segoe UI;background:#0f172a;color:white}
@@ -22,6 +22,8 @@ button{padding:10px 15px;margin:5px;border-radius:8px;border:none;cursor:pointer
 
 table{width:100%;border-collapse:collapse;margin-top:10px}
 th,td{padding:10px;border-bottom:1px solid #1f2937}
+
+pre{background:#0b1220;padding:10px;border-radius:10px;white-space:pre-wrap}
 </style>
 </head>
 
@@ -29,17 +31,21 @@ th,td{padding:10px;border-bottom:1px solid #1f2937}
 
 <div class="container">
 
-<h2>🚀 Uniserve LIVE CRM (FULL FIXED)</h2>
+<h2>🚀 Uniserve CRM Online v2)</h2>
 
 <div class="card">
 
 <input id="name" placeholder="Customer Name">
 <input id="phone" placeholder="Phone">
 <input id="order" placeholder="Order ID">
+<input id="date" placeholder="Enter Order Date">
 <input id="outlet" placeholder="Outlet">
 
+  
 <textarea id="concern" placeholder="Customer Concern"></textarea>
 
+
+  
 <select id="issue">
 <option>Missing Item</option>
 <option>Cancel Request</option>
@@ -47,15 +53,24 @@ th,td{padding:10px;border-bottom:1px solid #1f2937}
 <option>Delayed Order</option>
 <option>Veg / Non-Veg Concern</option>
 <option>Refund Request</option>
+<option>Bulk Order Query</option>
 <option>Complaint</option>
+<option>Business Query</option>
+<option>Food Quality Issue</option>
+<option>Packaging Issue</option>
+<option>Payment Issue</option>
 <option>Outlet Complaint</option>
+<option>Delivery Partner Issue</option>
+<option>Instruction</option>
 </select>
 
 <select id="partner">
 <option>Swiggy</option>
 <option>Zomato</option>
 <option>Magicpin</option>
+<option>WowEats</option>
 <option>Direct Outlet</option>
+<option>Uber Eats</option>
 </select>
 
 <select id="agent">
@@ -63,10 +78,11 @@ th,td{padding:10px;border-bottom:1px solid #1f2937}
 <option>Riya</option>
 <option>Biswajit</option>
 <option>Soumili</option>
+<option>Shayonika</option>
 </select>
 
 <button class="primary" onclick="addCase()">Generate Case</button>
-<button class="success" onclick="copyCase()">Copy</button>
+<button class="success" onclick="copyCase()">Copy Case</button>
 <button class="danger" onclick="clearForm()">Clear</button>
 <button class="success" onclick="csv()">CSV</button>
 <button class="success" onclick="whatsapp()">WhatsApp</button>
@@ -74,23 +90,31 @@ th,td{padding:10px;border-bottom:1px solid #1f2937}
 </div>
 
 <div class="card">
-<h3>📊 Stats</h3>
-Total: <span id="total">0</span><br>
-Refund: <span id="refund">0</span><br>
-Complaint: <span id="complaint">0</span>
+<h3>📄 Case Note</h3>
+<pre id="note">No case generated</pre>
 </div>
 
 <div class="card">
 <h3>📁 Cases</h3>
-<input id="search" placeholder="Search Order ID..." onkeyup="render()">
+
+<input id="search" placeholder="Search Order ID..." onkeyup="filter()">
+
 <table>
 <thead>
 <tr>
-<th>ID</th><th>Name</th><th>Issue</th><th>Partner</th><th>Agent</th><th>Action</th>
+<th>Id</th>
+<th>Phone</th>
+<th>Name</th>
+<th>Order</th>
+<th>Issue</th>
+<th>Partner</th>
+<th>Agent</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody id="table"></tbody>
 </table>
+
 </div>
 
 </div>
@@ -99,9 +123,15 @@ Complaint: <span id="complaint">0</span>
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-getFirestore, collection, addDoc,
-onSnapshot, deleteDoc, doc,
-query, orderBy, serverTimestamp
+getFirestore,
+collection,
+addDoc,
+onSnapshot,
+deleteDoc,
+doc,
+query,
+orderBy,
+serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -119,41 +149,53 @@ const db = getFirestore(app);
 const ref = collection(db,"cases");
 
 let allData = [];
+let lastNote = "";
 
-function ticket(i){
-return "CX" + String(i).padStart(6,"0");
-}
+/* all right for uniserve */
+const get = id => document.getElementById(id).value;
 
-// ================= ADD CASE =================
+/* all right for uniserve */
 window.addCase = async function(){
 
 const data = {
-name:document.getElementById("name").value,
-phone:document.getElementById("phone").value,
-order:document.getElementById("order").value,
-outlet:document.getElementById("outlet").value,
-concern:document.getElementById("concern").value,
-issue:document.getElementById("issue").value,
-partner:document.getElementById("partner").value,
-agent:document.getElementById("agent").value,
+name:get("name"),
+phone:get("phone"),
+order:get("order"),
+date:get("date"),
+outlet:get("outlet"),
+concern:get("concern"),
+issue:get("issue"),
+partner:get("partner"),
+agent:get("agent"),
 time:serverTimestamp()
 };
 
 if(!data.name || !data.order){
-alert("Name & Order ID required");
+alert("Name & Order required");
 return;
 }
 
 await addDoc(ref,data);
 
+/* case section dont play otherwise Parth will kill you */
+lastNote =
+`Name: ${data.name}
+Phone: ${data.phone}
+Order: ${data.order}
+Date: ${data.date}
+Outlet: ${data.outlet}
+Issue: ${data.issue} : Concern: ${data.concern}
+Partner: ${data.partner}`;
+
+document.getElementById("note").innerText = lastNote;
+
 clearForm();
 }
 
-// ================= LIVE LOAD =================
+/* all right for uniserve */
 onSnapshot(query(ref,orderBy("time","desc")),(snap)=>{
 
-allData = [];
-
+allData=[];
 let html="";
 let i=1;
 
@@ -163,8 +205,10 @@ allData.push(x);
 
 html+=`
 <tr>
-<td>${ticket(i++)}</td>
+<td>CX${String(i++).padStart(5,"0")}</td>
+<td>${x.phone}</td>
 <td>${x.name}</td>
+<td>${x.order}</td>
 <td>${x.issue}</td>
 <td>${x.partner}</td>
 <td>${x.agent}</td>
@@ -174,31 +218,24 @@ html+=`
 
 document.getElementById("table").innerHTML=html;
 
-// stats
-document.getElementById("total").innerText=allData.length;
-document.getElementById("refund").innerText=allData.filter(x=>x.issue.includes("Refund")).length;
-document.getElementById("complaint").innerText=allData.filter(x=>x.issue.includes("Complaint")).length;
-
 });
 
-// ================= DELETE =================
+/* all right for uniserve */
 window.del = async function(id){
 await deleteDoc(doc(db,"cases",id));
 }
 
-// ================= COPY =================
+/* all right for uniserve */
 window.copyCase = function(){
-navigator.clipboard.writeText(
-`${name.value} | ${order.value} | ${issue.value} | ${partner.value}`
-);
+navigator.clipboard.writeText(lastNote || "");
 }
 
-// ================= CLEAR =================
+/* all right for uniserve */
 window.clearForm = function(){
-document.querySelectorAll("input,textarea").forEach(x=>x.value="");
+document.querySelectorAll("input,textarea").forEach(e=>e.value="");
 }
 
-// ================= CSV =================
+/* all right for uniserve */
 window.csv = function(){
 let csv="Name,Order,Issue,Partner,Agent\n";
 allData.forEach(x=>{
@@ -211,14 +248,31 @@ a.download="cases.csv";
 a.click();
 }
 
-// ================= WHATSAPP =================
+/* all right for uniserve */
 window.whatsapp = function(){
-window.open("https://wa.me/?text="+encodeURIComponent(
-`${name.value} | ${order.value} | ${issue.value} | ${partner.value}`
-));
+window.open("https://wa.me/?text="+encodeURIComponent(lastNote));
+}
+
+/* all right for uniserve */
+window.filter = function(){
+let v=document.getElementById("search").value.toLowerCase();
+document.querySelectorAll("tbody tr").forEach(r=>{
+r.style.display=r.innerText.toLowerCase().includes(v)?"":"none";
+});
 }
 
 </script>
-
+<footer style="
+margin-top:40px;
+text-align:center;
+padding:20px;
+color:#cbd5e1;
+font-size:14px;
+background:rgba(255,255,255,0.03);
+border-radius:12px;
+backdrop-filter:blur(10px);
+">
+  Built with by <b>Parth</b> • Uniserve System v2 © 2026
+</footer>
 </body>
 </html>
